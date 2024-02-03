@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGNIFY</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #video {
+            transform: scaleX(-1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="position-relative" style="width: 640px; height: 480px;">
+            <video id="video" playsinline class="position-absolute top-0 start-0" width="1280" height="960" autoplay muted></video>
+            <canvas id="output" class="position-absolute top-0 start-0" width="1280" height="960"></canvas>
+        </div>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
