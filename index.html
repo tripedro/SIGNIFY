@@ -13,9 +13,16 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div class="position-relative" style="width: 640px; height: 480px;">
-            <video id="video" playsinline class="position-absolute top-0 start-0" width="1280" height="960" autoplay muted></video>
-            <canvas id="output" class="position-absolute top-0 start-0" width="1280" height="960"></canvas>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="position-relative" style="width: 800px; height: 600px;">
+                    <video id="video" playsinline class="position-absolute top-0 start-0" width="800" height="600" autoplay muted></video>
+                    <canvas id="output" class="position-absolute top-0 start-0" width="800" height="600"></canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="handCoordinates" class="mt-3"></div>
+            </div>
         </div>
     </div>
     <script type="module" src="app.js"></script>

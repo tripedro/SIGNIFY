@@ -14,8 +14,8 @@ const detectorConfig = {
 let detector;
 
 async function setupCamera() {
-  video.width = 1280;
-  video.height = 960;
+  video.width = 800;
+  video.height = 600;
 
   const stream = await navigator.mediaDevices.getUserMedia({
     'audio': false,
@@ -74,6 +74,24 @@ async function detectHands() {
       context.arc(x, y, 5, 0, 2 * Math.PI);
       context.fill();
     });
+
+    // Display coordinates
+    if(predictions.length > 0) {
+      let coordinatesHtml = '';
+
+      predictions.forEach((prediction, index) => {
+          const keypoints = prediction.keypoints;
+          coordinatesHtml += `<strong>Hand ${index + 1}:</strong><br>`;
+
+          keypoints.forEach((point, idx) => {
+              coordinatesHtml += `Point ${idx}: (${point.x.toFixed(2)}, ${point.y.toFixed(2)})<br>`;
+          });
+
+          coordinatesHtml += `<br>`; // Add space between hands
+      });
+
+      document.getElementById('handCoordinates').innerHTML = coordinatesHtml;
+    }    
   });
 
   // Restore the context to its original state
