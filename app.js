@@ -214,12 +214,14 @@ async function main() {
     displayLastCapturedPoints(); 
   });
 
+  // button for saving latest normalized point in it's array
   document.getElementById('saveBtn').addEventListener('click', () => {
     if (capturedPoses && capturedPoses.length > 0) {
-        // Format the normalized coordinates as a string
-        let coordinatesStr = capturedPoses.map(pose => {
-            return pose.map(point => `(${point.x.toFixed(2)}, ${point.y.toFixed(2)})`).join('\n');
-        }).join('\n\n');
+        // Access the latest (last) set of normalized coordinates
+        const latestPose = capturedPoses[capturedPoses.length - 1];
+        
+        // Format the latest set of normalized coordinates as a string
+        let coordinatesStr = latestPose.map(point => `(${point.x.toFixed(2)}, ${point.y.toFixed(2)})`).join('\n');
 
         // Convert the string to a Blob
         const blob = new Blob([coordinatesStr], { type: 'text/plain' });
