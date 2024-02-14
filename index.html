@@ -6,16 +6,13 @@
     <title>SIGNIFY</title>
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        #video {
-            transform: scaleX(-1);
-        }
-        #plotCanvas {
+        #video, #plotCanvas {
             transform: scaleX(-1);
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container-xxl mt-5">
         <div class="row">
             <!-- Column for video and overlaying canvas -->
             <div class="col-md-6">
@@ -25,7 +22,7 @@
                 </div>
             </div>
             <!-- Column for the separate canvas -->
-            <div class="col-md-6"> 
+            <div class="col-sm-6"> 
                 <canvas id="plotCanvas" width="800" height="600" style="width:100%; height:600px; border:1px solid #000000;"></canvas>
             </div>
         </div>
@@ -33,6 +30,7 @@
             <div class="col-sm-6">
                 <button id="captureBtn" class="btn btn-primary">Capture Hand Points</button>
                 <button id="loadAndPlotBtn" class="btn btn-secondary">Load and Plot Points</button>
+                <button id="saveBtn" class="btn btn-success">Save Coordinates</button>
             </div>
             <div class="col-sm-6 d-flex">
                 <div id="handCoordinates" class="me-2"></div>

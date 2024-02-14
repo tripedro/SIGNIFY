@@ -212,7 +212,29 @@ async function main() {
   document.getElementById('loadAndPlotBtn').addEventListener('click', () => {
     plotNormalizedPoints();
     displayLastCapturedPoints(); 
-});
+  });
+
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    if (capturedPoses && capturedPoses.length > 0) {
+        // Format the normalized coordinates as a string
+        let coordinatesStr = capturedPoses.map(pose => {
+            return pose.map(point => `(${point.x.toFixed(2)}, ${point.y.toFixed(2)})`).join('\n');
+        }).join('\n\n');
+
+        // Convert the string to a Blob
+        const blob = new Blob([coordinatesStr], { type: 'text/plain' });
+
+        // Create a link and trigger the download
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'normalized_coordinates.txt'; // Name of the file to be downloaded
+        document.body.appendChild(a); // Append the link to the document
+        a.click(); // Trigger the download
+        document.body.removeChild(a); // Clean up
+    } else {
+        console.log('No normalized poses to save.');
+    }
+  });
 }
 
 main();
