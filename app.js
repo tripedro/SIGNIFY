@@ -9,19 +9,49 @@ spinner.ontransitionend = () => {
   spinner.style.display = 'none';
 };
 
+let latestCoordinates = []; // Store the latest raw coordinates
+
+function displayCoordinates(handLandmarks) {
+    const coordinatesDiv = document.getElementById('coordinates');
+    coordinatesDiv.innerHTML = ''; // Clear previous coordinates
+
+    handLandmarks.forEach((landmark, index) => {
+        coordinatesDiv.innerHTML += `Point ${index}: (${landmark.x.toFixed(2)}, ${landmark.y.toFixed(2)})<br>`;
+        latestCoordinates[index] = { x: landmark.x.toFixed(2), y: landmark.y.toFixed(2) }; // Update the latest raw coordinates
+    });
+}
+
+function saveCoordinates() {
+  if (latestCoordinates.length > 0) {
+      let dataStr = latestCoordinates.map(point => `(${point.x}, ${point.y})`).join('\n');
+      let blob = new Blob([dataStr], { type: 'text/plain' });
+      let url = URL.createObjectURL(blob);
+      let link = document.createElement('a');
+      link.download = 'hand_coordinates.txt';
+      link.href = url;
+      link.click();
+  } else {
+      console.log('No coordinates to save.');
+  }
+}
+
 function onResultsHands(results) {
   document.body.classList.add('loaded');
   fpsControl.tick();
 
   canvasCtx3.save();
   canvasCtx3.clearRect(0, 0, out3.width, out3.height);
-  canvasCtx3.drawImage(
-      results.image, 0, 0, out3.width, out3.height);
+  canvasCtx3.drawImage(results.image, 0, 0, out3.width, out3.height);
   if (results.multiHandLandmarks && results.multiHandedness) {
     for (let index = 0; index < results.multiHandLandmarks.length; index++) {
       const classification = results.multiHandedness[index];
       const isRightHand = classification.label === 'Right';
       const landmarks = results.multiHandLandmarks[index];
+
+      // Display raw (already normalized) coordinates
+      // 0,0 top left && 1,1 bottom right
+      displayCoordinates(landmarks);
+
       drawConnectors(
           canvasCtx3, landmarks, HAND_CONNECTIONS,
           {color: isRightHand ? '#949494' : '#949494'}),
@@ -42,7 +72,7 @@ hands.onResults(onResultsHands);
 
 const camera = new Camera(video3, {
   onFrame: async () => {
-    await hands.send({image: video3});
+      await hands.send({image: video3});
   },
   width: 480,
   height: 480
@@ -50,31 +80,22 @@ const camera = new Camera(video3, {
 camera.start();
 
 new ControlPanel(controlsElement3, {
-      selfieMode: true,
-      maxNumHands: 2,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5
-    })
-    .add([
-      new StaticText({title: 'MediaPipe Hands'}),
-      fpsControl,
-      new Toggle({title: 'Selfie Mode', field: 'selfieMode'}),
-      new Slider(
-          {title: 'Max Number of Hands', field: 'maxNumHands', range: [1, 4], step: 1}),
-      new Slider({
-        title: 'Min Detection Confidence',
-        field: 'minDetectionConfidence',
-        range: [0, 1],
-        step: 0.01
-      }),
-      new Slider({
-        title: 'Min Tracking Confidence',
-        field: 'minTrackingConfidence',
-        range: [0, 1],
-        step: 0.01
-      }),
-    ])
-    .on(options => {
-      video3.classList.toggle('selfie', options.selfieMode);
-      hands.setOptions(options);
-    });
+  selfieMode: true,
+  maxNumHands: 2,
+  minDetectionConfidence: 0.5,
+  minTrackingConfidence: 0.5
+})
+.add([
+  new StaticText({title: 'MediaPipe Hands'}),
+  fpsControl,
+  new Toggle({title: 'Selfie Mode', field: 'selfieMode'}),
+  new Slider({title: 'Max Number of Hands', field: 'maxNumHands', range: [1, 4], step: 1}),
+  new Slider({title: 'Min Detection Confidence', field: 'minDetectionConfidence', range: [0, 1], step: 0.01}),
+  new Slider({title: 'Min Tracking Confidence', field: 'minTrackingConfidence', range: [0, 1], step: 0.01}),
+])
+.on(options => {
+  video3.classList.toggle('selfie', options.selfieMode);
+  hands.setOptions(options);
+});
+
+document.getElementById('saveBtn').addEventListener('click', saveCoordinates);
