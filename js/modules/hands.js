@@ -17,14 +17,13 @@ function onResultsHands(results, canvasCtx3, out3) {
 
       drawConnectors(
         canvasCtx3, landmarks, HAND_CONNECTIONS,
-        { color: isRightHand ? '#949494' : '#949494' }),
-        drawLandmarks(canvasCtx3, landmarks, {
-          color: isRightHand ? '#00FF00' : '#FF0000',
-          fillColor: isRightHand ? '#FF0000' : '#00FF00',
-          radius: (data) => {
-            return data.visibility < 0.1 ? 0 : (isRightHand ? 4 : 2);
-          }
-        });
+        { color: '#949494' }
+      );
+      drawLandmarks(canvasCtx3, landmarks, {
+        color: isRightHand ? '#00FF00' : '#FF0000',
+        fillColor: '#00FF00',
+        radius: 2
+      });
     }
   }
   canvasCtx3.restore();
