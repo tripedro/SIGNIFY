@@ -30,4 +30,23 @@ function saveCoordinates() {
   }
 }
 
-export { displayCoordinates, saveCoordinates };
+function displayWordWithHighlight(word, currentLetterIndex) {
+  const wordDisplay = document.getElementById('wordDisplay'); // Ensure this element exists in your HTML
+  wordDisplay.innerHTML = ''; // Clear previous word
+  [...word].forEach((letter, index) => {
+    const span = document.createElement('span');
+    span.textContent = letter;
+    if (index === currentLetterIndex) {
+      span.style.color = 'red'; // Highlight the current letter
+      span.style.fontWeight = 'bold';
+    }
+    wordDisplay.appendChild(span);
+  });
+}
+
+function getLatestCoordinates() {
+  return latestCoordinates;
+}
+
+export { displayCoordinates, saveCoordinates, displayWordWithHighlight, getLatestCoordinates };
+

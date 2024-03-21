@@ -1,7 +1,59 @@
 // app.js in the superdirectory js/
-import { saveCoordinates } from './modules/ui.js';
+import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates} from './modules/ui.js';
 import { onResultsHands } from './modules/hands.js';
 import { initializeCamera } from './modules/camera.js';
+import aslStaticAlphabet from './modules/aslStaticAlphabet.js';
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Define the words to be spelled and the current state
+const wordsToSpell = ['Able', 'Buy', 'Wavy'];
+let currentWordIndex = 0;
+let currentLetterIndex = 0;
+const latestCoordinates = getLatestCoordinates();
+
+function checkLetterMatch() {
+    const currentWord = wordsToSpell[currentWordIndex];
+    const currentLetter = currentWord[currentLetterIndex].toUpperCase();
+    const landmarks = latestCoordinates; // Make sure this is accessible, may need to export/import
+  
+    // Logic to check if landmarks match currentLetter's template
+    // This is a placeholder for the actual comparison logic
+    const isMatch = compareLandmarksToTemplate(landmarks, aslStaticAlphabet[currentLetter]);
+  
+    if (isMatch) {
+      if (currentLetterIndex < currentWord.length - 1) {
+        // Move to the next letter in the current word
+        currentLetterIndex++;
+      } else {
+        // Word completed, move to the next word
+        currentWordIndex++;
+        currentLetterIndex = 0;
+        if (currentWordIndex >= wordsToSpell.length) {
+          // All words completed
+          console.log('Great job! All words spelled.');
+          return;
+        }
+      }
+      // Update UI for next letter
+      displayWordWithHighlight(currentWord, currentLetterIndex);
+    }
+  }
+  
+  // Placeholder for the function comparing landmarks to template
+  // You will need to implement this based on your matching logic
+  function compareLandmarksToTemplate(landmarks, template) {
+    // Implement comparison logic here
+    // Return true if the landmarks match the template closely enough
+    return false; // Placeholder return
+  }
+  
+  // Initialize the UI with the first word and letter
+  displayWordWithHighlight(wordsToSpell[0], 0);
+  
+  // Call checkLetterMatch periodically or trigger it via a specific event
+  setInterval(checkLetterMatch, 1000); // Example: check every second
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const video3 = document.getElementsByClassName('input_video3')[0];
 const out3 = document.getElementsByClassName('output3')[0];
