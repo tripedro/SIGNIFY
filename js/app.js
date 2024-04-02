@@ -7,7 +7,7 @@ import { compareLandmarksToTemplate } from './modules/matchingLogic.js';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Define the words to be spelled and the current state
-const wordsToSpell = ['Able', 'Buy', 'Wavy'];
+const wordsToSpell = ['Able', 'Buy', 'Wavy', 'ZJ'];
 let currentWordIndex = 0;
 let currentLetterIndex = 0;
 const latestCoordinates = getLatestCoordinates();
@@ -54,36 +54,35 @@ async function setupAndStart() {
 }
 
 function checkLetterMatch() {
-    const currentWord = wordsToSpell[currentWordIndex];
-    const currentLetter = currentWord[currentLetterIndex].toUpperCase();
-    const landmarks = latestCoordinates;
-  
-    // Logic to check if landmarks match currentLetter's template
-    const isMatch = compareLandmarksToTemplate(landmarks, aslStaticAlphabet[currentLetter]);
-  
-    if (isMatch) {
-      // Introduce a delay before processing the next letter
+  const currentWord = wordsToSpell[currentWordIndex];
+  const currentLetter = currentWord[currentLetterIndex].toUpperCase();
+  const landmarks = latestCoordinates;
+
+  // Identify if the current letter is dynamic
+  const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
+
+  // Call the comparison function with the dynamic flag as needed
+  const isMatch = compareLandmarksToTemplate(landmarks, aslStaticAlphabet[currentLetter], isDynamicLetter);
+
+  if (isMatch) {
+      // Existing logic for processing the match
       setTimeout(() => {
         if (currentLetterIndex < currentWord.length - 1) {
-          // Move to the next letter in the current word
           currentLetterIndex++;
         } else {
-          // Word completed, move to the next word
           currentWordIndex++;
           currentLetterIndex = 0;
           if (currentWordIndex >= wordsToSpell.length) {
-            // All words completed
             console.log('Great job! All words spelled.');
             return;
           }
         }
-        // Update UI for next letter
         displayWordWithHighlight(currentWord, currentLetterIndex);
-      }, 1000); // This is the corrected line with the closing parenthesis added
-    }
-      // Update UI for next letter
-      displayWordWithHighlight(currentWord, currentLetterIndex);
+      }, 1000);
   }
+  displayWordWithHighlight(currentWord, currentLetterIndex);
+}
+
   
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
