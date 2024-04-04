@@ -1,5 +1,5 @@
 // app.js in the superdirectory js/
-import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates} from './modules/ui.js';
+import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording} from './modules/ui.js';
 import { onResultsHands } from './modules/hands.js';
 import { initializeCamera } from './modules/camera.js';
 import aslStaticAlphabet from './modules/aslStaticAlphabet.js';
@@ -46,9 +46,6 @@ async function setupAndStart() {
       hands.setOptions(options);
   });
 
-  // Attach event listener for the save button
-  document.getElementById('saveBtn').addEventListener('click', saveCoordinates);
-
   // Start checking for letter matches
   setInterval(checkLetterMatch, 1000); // Check every second
 }
@@ -88,4 +85,14 @@ function checkLetterMatch() {
 
 document.addEventListener("DOMContentLoaded", (event) => {
   setupAndStart().catch(console.error);
+
+  document.getElementById('saveBtn').addEventListener('click', function() {
+    // Retrieve the current frame's coordinates
+    const currentFrameCoordinates = getLatestCoordinates();
+
+    // Call `saveCoordinates` with the current frame's coordinates and the flag set to true
+    saveCoordinates(currentFrameCoordinates, true);
+  });
+  
+  document.getElementById('toggleRecordingBtn').addEventListener('click', toggleRecording);
 });
