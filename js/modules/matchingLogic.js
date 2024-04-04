@@ -8,10 +8,10 @@ function euclideanDistance(point1, point2) {
   return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 }
 
-function checkDynamicLetter(landmarks, template) {
-  // DTW
-  return true;
-}
+// function checkDynamicLetter(landmarks, template) {
+//   // DTW
+//   return true;
+// }
 
 // Function to calculate the total distance difference between all corresponding points
 function calculateTotalDistanceDifference(landmarks1, landmarks2) {
@@ -26,9 +26,7 @@ export function compareLandmarksToTemplate(landmarks, template) {
       console.error("Landmarks and template are not compatible.");
       return false;
   }
-  if (isDynamic) {
-    return checkDynamicLetter(landmarks, template);
-  } else {
+  else {
     // Existing logic for static letter comparison
     const difference = calculateTotalDistanceDifference(landmarks, template);
     const threshold = 3;

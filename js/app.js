@@ -56,10 +56,10 @@ function checkLetterMatch() {
   const landmarks = latestCoordinates;
 
   // Identify if the current letter is dynamic
-  const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
+  //const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
 
   // Call the comparison function with the dynamic flag as needed
-  const isMatch = compareLandmarksToTemplate(landmarks, aslStaticAlphabet[currentLetter], isDynamicLetter);
+  const isMatch = compareLandmarksToTemplate(landmarks, aslStaticAlphabet[currentLetter]);
 
   if (isMatch) {
       // Existing logic for processing the match
