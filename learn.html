@@ -14,6 +14,16 @@
     .input_video3 {
       display: none;
     }
+
+    /* Allows to have a specific section of the camera to be shown, Right now it tracks the right half. */
+    .output3 {
+      width: 960px;
+      /* Adjust to match your webcam's resolution */
+      height: 480px;
+      /* Adjust to match your webcam's resolution */
+      object-fit: cover;
+      clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    }
   </style>
   <link rel="icon" href="icon.ico" type="image/x-icon">
 </head>

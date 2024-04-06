@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.2/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/hands.js" crossorigin="anonymous"></script>
+    <style>
+        .input_video3 {
+            display: none;
+        }
+
+        /* Allows to have a specific section of the camera to be shown, Right now it tracks the right half. */
+        .output3 {
+            width: 960px;
+            /* Adjust to match your webcam's resolution */
+            height: 480px;
+            /* Adjust to match your webcam's resolution */
+            object-fit: cover;
+            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+        }
+
+        #coordinates {
+            display: none;
+        }
+
+        #gameDisplay {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <link rel="icon" href="../icon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <!-- CONTENTS -->
+    <div class="container" style="margin-top: 20px;">
+
+        <div class="columns">
+
+            <!-- WEBCAM INPUT -->
+            <div class="column">
+                <article class="panel is-info">
+                    <div class="panel-block">
+                        <video class="input_video3"></video>
+                    </div>
+                </article>
+            </div>
+
+            <!-- MEDIAPIPE OUTPUT -->
+            <div class="column">
+                <article class="panel is-info">
+                    <p class="panel-heading">
+                        Mediapipe Hands Detection
+                    </p>
+                    <div class="panel-block">
+                        <canvas class="output3" width="480px" height="480px"></canvas>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div id="coordinates" style="margin-bottom: 20px;"></div>
+
+        <div class="loading">
+            <div class="spinner"></div>
+        </div>
+        <div style="visibility: hidden;" class="control3">
+        </div>
+
+        <div id="gameDisplay">
+            <p>Word to Guess: <span id="wordInProgress"></span></p>
+        </div>
+
+        <script type="module" src="../js/gameApp1.js"></script>
+</body>
+
+</html>
