@@ -8,9 +8,10 @@ import { compareLandmarksToTemplates } from './modules/matchingLogic.js';
 // Game State Variables
 let currentWordIndex = 0;
 let currentLetterIndex = 0;
-const wordsToSpell = ["ABLE", "TEST", "WORK", "ASL"]; // Be sure to have all capital letters
+const wordsToSpell = ["ABLE", "BABY", "WAVY", "LOSE"]; // Be sure to have all capital letters
 let matchedLetters = [];
-const word = wordsToSpell[0];
+let guessedWords = 0;
+const word = wordsToSpell[Math.floor(Math.random() * wordsToSpell.length)];
 initializeWordDisplay(word);
 
 async function setupAndStart() {
@@ -104,11 +105,6 @@ function checkLetterMatch() {
     const landmarks = getLatestCoordinates();
     const isMatch = compareLandmarksToTemplates(landmarks, aslStaticAlphabet);
 
-    // if (isMatch.success) {
-    //     matchedLetters.push(isMatch.letter);
-    //     updateWord(currentWord, matchedLetters);
-
-    // }
     if (isMatch.success) {
         if (!matchedLetters.includes(isMatch.letter)) {
             matchedLetters.push(isMatch.letter);
@@ -122,15 +118,17 @@ function checkLetterMatch() {
             console.log(`Word completed: ${currentWord}`);
             currentWordIndex++; // Move to the next word
             matchedLetters = []; // Reset matched letters for the new word
+            ++guessedWords;
 
             // Check if there are more words to spell
             if (currentWordIndex < wordsToSpell.length) {
                 console.log(`Next word: ${wordsToSpell[currentWordIndex]}`);
+                document.getElementById('Score').innerHTML = "You Have Guessed " + guessedWords + " Words!";
                 // Update the game display for the new word here
                 updateWord(wordsToSpell[currentWordIndex], matchedLetters);
             } else {
                 console.log('Congratulations! All words spelled.');
-                // Handle game completion here
+                document.getElementById('Score').innerHTML = "You Have Guessed " + guessedWords + " Words! That's all we Have Now!";
             }
         }
     }
