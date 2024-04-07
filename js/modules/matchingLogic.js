@@ -29,7 +29,7 @@ export function compareLandmarksToTemplate(landmarks, template) {
   else {
     // Existing logic for static letter comparison
     const difference = calculateTotalDistanceDifference(landmarks, template);
-    const threshold = 5;
+    const threshold = 10;
     console.log(difference)
     console.log(difference < threshold)
     return difference < threshold;

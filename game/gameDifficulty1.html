@@ -34,14 +34,23 @@
             display: none;
         }
 
+        .flex-container {
+            display: flex;
+            /* Use flexbox to layout children */
+            justify-content: space-between;
+            /* Space between the canvas and the image */
+            align-items: center;
+            /* Align items vertically in the center */
+        }
+
         /* Allows to have a specific section of the camera to be shown, Right now it tracks the right half. */
         .output3 {
-            width: 960px;
+            width: 800px;
             /* Adjust to match your webcam's resolution */
             height: 480px;
             /* Adjust to match your webcam's resolution */
             object-fit: cover;
-            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+            clip-path: polygon(40% 0, 100% 0, 100% 100%, 40% 100%);
         }
 
         #coordinates {
@@ -96,7 +105,7 @@
                                 Level 1
                             </h2>
                             <p id="Score"></p>
-                            <div class="panel-block">
+                            <div class="flex-container">
                                 <canvas class="output3" width="480px" height="480px"></canvas>
                             </div>
                         </article>
