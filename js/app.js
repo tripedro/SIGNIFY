@@ -1,5 +1,5 @@
 // app.js in the superdirectory js/
-import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording} from './modules/ui.js';
+import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording } from './modules/ui.js';
 import { onResultsHands } from './modules/hands.js';
 import { initializeCamera } from './modules/camera.js';
 import aslStaticAlphabet from './modules/aslStaticAlphabet.js';
@@ -31,23 +31,23 @@ async function setupAndStart() {
 
   // Setup the control panel
   new ControlPanel(controlsElement3, {
-      selfieMode: true,
-      maxNumHands: 2,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5
+    selfieMode: true,
+    maxNumHands: 2,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
   }).add([
-      new StaticText({title: 'MediaPipe Hands'}),
-      new Toggle({title: 'Selfie Mode', field: 'selfieMode'}),
-      new Slider({title: 'Max Number of Hands', field: 'maxNumHands', range: [1, 4], step: 1}),
-      new Slider({title: 'Min Detection Confidence', field: 'minDetectionConfidence', range: [0.7, 0.9], step: 0.01}),
-      new Slider({title: 'Min Tracking Confidence', field: 'minTrackingConfidence', range: [0.7, 0.9], step: 0.01}),
+    new StaticText({ title: 'MediaPipe Hands' }),
+    new Toggle({ title: 'Selfie Mode', field: 'selfieMode' }),
+    new Slider({ title: 'Max Number of Hands', field: 'maxNumHands', range: [1, 4], step: 1 }),
+    new Slider({ title: 'Min Detection Confidence', field: 'minDetectionConfidence', range: [0.7, 0.9], step: 0.01 }),
+    new Slider({ title: 'Min Tracking Confidence', field: 'minTrackingConfidence', range: [0.7, 0.9], step: 0.01 }),
   ]).on(options => {
-      video3.classList.toggle('selfie', options.selfieMode);
-      hands.setOptions(options);
+    video3.classList.toggle('selfie', options.selfieMode);
+    hands.setOptions(options);
   });
 
   // Start checking for letter matches
-  setInterval(checkLetterMatch, 1000); // Check every second
+  setInterval(checkLetterMatch, 1500); // Check every second
 }
 
 function checkLetterMatch() {
@@ -55,6 +55,7 @@ function checkLetterMatch() {
   const currentLetter = currentWord[currentLetterIndex].toUpperCase();
   const landmarks = latestCoordinates;
 
+  changeImage("../pictures/" + currentLetter + ".png");
   // Identify if the current letter is dynamic
   //const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
 
@@ -62,37 +63,40 @@ function checkLetterMatch() {
   const isMatch = compareLandmarksToTemplate(landmarks, aslStaticAlphabet[currentLetter]);
 
   if (isMatch) {
-      // Existing logic for processing the match
-      setTimeout(() => {
-        if (currentLetterIndex < currentWord.length - 1) {
-          currentLetterIndex++;
-        } else {
-          currentWordIndex++;
-          currentLetterIndex = 0;
-          if (currentWordIndex >= wordsToSpell.length) {
-            console.log('Great job! All words spelled.');
-            return;
-          }
+    // Existing logic for processing the match
+    setTimeout(() => {
+      if (currentLetterIndex < currentWord.length - 1) {
+        currentLetterIndex++;
+      } else {
+        currentWordIndex++;
+        currentLetterIndex = 0;
+        if (currentWordIndex >= wordsToSpell.length) {
+          console.log('Great job! All words spelled.');
+          return;
         }
-        displayWordWithHighlight(currentWord, currentLetterIndex);
-      }, 1000);
+      }
+      displayWordWithHighlight(currentWord, currentLetterIndex);
+    }, 1000);
   }
   displayWordWithHighlight(currentWord, currentLetterIndex);
 }
 
-  
+function changeImage(newSrc) {
+  document.getElementById('dynamicPicture').src = newSrc;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 document.addEventListener("DOMContentLoaded", (event) => {
   setupAndStart().catch(console.error);
 
-  document.getElementById('saveBtn').addEventListener('click', function() {
+  document.getElementById('saveBtn').addEventListener('click', function () {
     // Retrieve the current frame's coordinates
     const currentFrameCoordinates = getLatestCoordinates();
 
     // Call `saveCoordinates` with the current frame's coordinates and the flag set to true
     saveCoordinates(currentFrameCoordinates, true);
   });
-  
+
   document.getElementById('toggleRecordingBtn').addEventListener('click', toggleRecording);
 });
