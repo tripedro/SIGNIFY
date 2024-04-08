@@ -1,5 +1,5 @@
 // matchingLogic.js
-import aslStaticAlphabet from './aslStaticAlphabet.js';
+import DTWStream2D from './DTW.js';
 
 // Helper function to calculate Euclidean distance between two points
 function euclideanDistance(point1, point2) {
