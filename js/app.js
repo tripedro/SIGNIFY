@@ -12,7 +12,7 @@ let currentWordIndex = 0;
 let currentLetterIndex = 0;
 const latestCoordinates = getLatestCoordinates();
 let lastDetectionTime = 0; // This will store the timestamp of the last detection
-const detectionDelay = 1000; // Delay in milliseconds
+const detectionDelay = 500; // Delay in milliseconds
 
 async function setupAndStart() {
   const video3 = document.getElementsByClassName('input_video3')[0];
@@ -53,6 +53,11 @@ async function setupAndStart() {
 }
 
 function checkLetterMatch() {
+  const currentTime = Date.now();
+  if (currentTime < lastDetectionTime + detectionDelay) {
+    return; // Skip the check if the delay has not passed
+  }
+
   const currentWord = wordsToSpell[currentWordIndex];
   const currentLetter = currentWord[currentLetterIndex].toUpperCase();
   const landmarks = latestCoordinates;

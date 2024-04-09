@@ -30,13 +30,14 @@ function recordCoordinates(handLandmarks) {
 }
 
 function displayCoordinates(handLandmarks) {
+  // comments remove printed coords
   //const coordinatesDiv = document.getElementById('coordinates');
   //coordinatesDiv.innerHTML = ''; // Clear previous coordinates
 
-  // handLandmarks.forEach((landmark, index) => {
-  //   coordinatesDiv.innerHTML += `Point ${index}: (${landmark.x.toFixed(2)}, ${landmark.y.toFixed(2)})<br>`;
-  //   latestCoordinates[index] = { x: landmark.x.toFixed(2), y: landmark.y.toFixed(2) }; // Update the latest raw coordinates
-  // });
+  handLandmarks.forEach((landmark, index) => {
+    //coordinatesDiv.innerHTML += `Point ${index}: (${landmark.x.toFixed(2)}, ${landmark.y.toFixed(2)})<br>`;
+    latestCoordinates[index] = { x: landmark.x.toFixed(2), y: landmark.y.toFixed(2) }; // Update the latest raw coordinates
+  });
 
   recordCoordinates(handLandmarks); // record landmarks, 
 }
