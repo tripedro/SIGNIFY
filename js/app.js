@@ -11,6 +11,8 @@ const wordsToSpell = ['Able', 'Buy', 'Wavy', 'ZJ'];
 let currentWordIndex = 0;
 let currentLetterIndex = 0;
 const latestCoordinates = getLatestCoordinates();
+let lastDetectionTime = 0; // This will store the timestamp of the last detection
+const detectionDelay = 1000; // Delay in milliseconds
 
 async function setupAndStart() {
   const video3 = document.getElementsByClassName('input_video3')[0];
