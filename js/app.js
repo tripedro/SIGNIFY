@@ -54,8 +54,15 @@ function checkLetterMatch() {
   const currentWord = wordsToSpell[currentWordIndex];
   const currentLetter = currentWord[currentLetterIndex].toUpperCase();
   const landmarks = latestCoordinates;
+  var preferredHand = localStorage.getItem('preferredHand');
 
-  changeImage("../pictures/" + currentLetter + ".png");
+  if (preferredHand === 'Right') {
+    changeImage("../pictures/" + currentLetter + "Right.png");
+  }
+  else {
+    changeImage("../pictures/" + currentLetter + "Left.png");
+
+  }
   // Identify if the current letter is dynamic
   //const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
 
