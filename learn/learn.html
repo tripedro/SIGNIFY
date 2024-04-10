@@ -34,8 +34,9 @@
       /* Align items vertically in the center */
     }
   </style>
+
   <link href="../assets/style/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="../icon" href="icon.ico" type="image/x-icon">
+  <link rel="icon" href="../icon.ico" type="image/x-icon">
   <link href="../css/cover.css" rel="stylesheet">
 
 </head>
@@ -77,13 +78,43 @@
               <div class="panel-block">
                 <!-- Flex Container -->
                 <div class="flex-container">
-                  <canvas class="output3" width="480px" height="480px"></canvas>
-                  <img src="" id="dynamicPicture" width="255" height="255">
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                      var preferredHand = localStorage.getItem('preferredHand');
+                      var container = document.querySelector('.flex-container');
+
+                      // Create image element
+                      var img = document.createElement('img');
+                      img.src = ""; // Add your source URL here
+                      img.id = "dynamicPicture";
+                      img.width = 255;
+                      img.height = 255;
+
+                      // Create canvas element
+                      var canvas = document.createElement('canvas');
+                      canvas.className = "output3";
+                      canvas.setAttribute('width', '480px');
+                      canvas.setAttribute('height', '480px');
+
+                      // Append elements to the container based on preferredHand
+                      if (preferredHand === 'Left') {
+                        container.appendChild(canvas); // Append canvas first for left-handed
+                        container.appendChild(img); // Then image
+                      } else {
+                        container.appendChild(img); // Append image first for right-handed or default
+                        container.appendChild(canvas); // Then canvas
+                      }
+                    });
+
+                    // <img src="" id="dynamicPicture" width="255" height="255">
+                    //     <canvas class="output3" width="480px" height="480px"></canvas>
+                  </script>
+
                 </div>
               </div>
             </article>
-
           </div>
+
         </div>
         <div id="wordDisplay" style="font-size: 24px; margin-bottom: 20px;"></div>
         <div id="coordinates" style="margin-bottom: 20px;"></div>
