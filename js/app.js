@@ -57,10 +57,10 @@ function checkLetterMatch() {
   var preferredHand = localStorage.getItem('preferredHand');
 
   if (preferredHand === 'Right') {
-    changeImage("../pictures/" + currentLetter + "Right.png");
+    changeImage("../pictures/" + currentLetter + "Left.png");
   }
   else {
-    changeImage("../pictures/" + currentLetter + "Left.png");
+    changeImage("../pictures/" + currentLetter + "Right.png");
 
   }
   // Identify if the current letter is dynamic
