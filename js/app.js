@@ -25,8 +25,13 @@ async function setupAndStart() {
     locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/${file}`
   });
 
-  // Setup the onResults callback for when results are received
-  hands.onResults(results => onResultsHands(results, canvasCtx3, out3));
+  hands.onResults(results => {
+    // Dynamically get the current letter based on the current word and letter indices
+    const currentWord = wordsToSpell[currentWordIndex];
+    let currentLetter = currentWord && currentWord.length > currentLetterIndex ? currentWord[currentLetterIndex].toUpperCase() : '';
+
+    onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlphabet);
+  });
 
   // Initialize the camera after 'hands' is defined
   await initializeCamera(video3, hands);

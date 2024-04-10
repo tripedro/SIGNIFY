@@ -36,6 +36,17 @@ export function compareLandmarksToTemplate(landmarks, template) {
   }
 }
 
+function compareLandmarksToTemplateDetailed(landmarks, template) {
+  const landmarkCorrectness = landmarks.map((landmark, index) => {
+    const distance = euclideanDistance(landmark, template[index]);
+    const threshold = 1.5;
+    //console.log(index, distance)
+    //console.log(index, distance < threshold)
+    return distance < threshold;
+  });
+  return landmarkCorrectness;
+}
+
 export function compareLandmarksToTemplates(landmarks, templates) {
   // Ensure landmarks is an array of points {x, y}
   if (!landmarks || !templates || Object.keys(templates).length === 0) {
@@ -67,3 +78,4 @@ export function compareLandmarksToTemplates(landmarks, templates) {
   return { success: false, letter: null };
 }
 
+export { compareLandmarksToTemplateDetailed };
