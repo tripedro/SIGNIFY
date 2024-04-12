@@ -33,10 +33,10 @@ function prepareSignature(data) {
 // Use this function to check gestures 
 // Start by picking some key point i.e. index finger for Z 
 function scoreGesture(target_seq, stream_seq){
-  var norm_ser1 = prepareSignature(ser1)
-  var norm_ser2 = prepareSignature(ser2)
+  var norm_target_seq = prepareSignature(target_seq)
+  var norm_stream_seq = prepareSignature(stream_seq)
 
-  var dtw = new DynamicTimeWarping(norm_ser1, norm_ser2, euclideanDistance);
+  var dtw = new DynamicTimeWarping(norm_target_seq, norm_stream_seq, euclideanDistance);
 
   return dtw.getDistance(); // I suggest trying dist < 30 -> pass
 
