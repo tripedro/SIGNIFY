@@ -1,5 +1,5 @@
 // matchingLogic.js
-import aslStaticAlphabet from './aslStaticAlphabet.js';
+import DTWStream2D from './DTW.js';
 
 // Helper function to calculate Euclidean distance between two points
 function euclideanDistance(point1, point2) {
@@ -8,24 +8,62 @@ function euclideanDistance(point1, point2) {
   return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 }
 
+// function checkDynamicLetter(landmarks, template) {
+//   // DTW
+//   return true;
+// }
+
 // Function to calculate the total distance difference between all corresponding points
 function calculateTotalDistanceDifference(landmarks1, landmarks2) {
   return landmarks1.reduce((acc, curr, index) => {
-      return acc + euclideanDistance(curr, landmarks2[index]);
+    return acc + euclideanDistance(curr, landmarks2[index]);
   }, 0);
 }
 
 export function compareLandmarksToTemplate(landmarks, template) {
   // Ensure landmarks and template are arrays of points {x, y}
   if (!landmarks || !template || landmarks.length !== template.length) {
-      console.error("Landmarks and template are not compatible.");
-      return false;
+    console.error("Landmarks and template are not compatible.");
+    return false;
+  }
+  else {
+    // Existing logic for static letter comparison
+    const difference = calculateTotalDistanceDifference(landmarks, template);
+    const threshold = 10;
+    console.log(difference)
+    console.log(difference < threshold)
+    return difference < threshold;
+  }
+}
+
+export function compareLandmarksToTemplates(landmarks, templates) {
+  // Ensure landmarks is an array of points {x, y}
+  if (!landmarks || !templates || Object.keys(templates).length === 0) {
+    console.error("Landmarks or templates are not properly defined.");
+    return { success: false, letter: null };
   }
 
-  const difference = calculateTotalDistanceDifference(landmarks, template);
-  const threshold = 3; 
-  console.log(difference)
-  console.log(difference < threshold)
+  const threshold = 10; // Define the threshold for a match
 
-  return difference < threshold;
+  // Iterate through each template (letter) in the templates object
+  for (const letter in templates) {
+    const template = templates[letter]; // Access the array of points for the current letter
+
+    if (landmarks.length !== template.length) {
+      continue; // Skip to the next template if the sizes don't match
+    }
+
+    const difference = calculateTotalDistanceDifference(landmarks, template);
+
+    // Check if the difference is within the acceptable threshold
+    if (difference < threshold) {
+      console.log(`Template match found for letter ${letter} with a difference of ${difference}`);
+      return { success: true, letter: letter }; // Match found, exit the function
+    }
+  }
+
+  // If no templates match
+  console.log("No template matches found.");
+  return { success: false, letter: null };
 }
+

@@ -1,6 +1,22 @@
 // hands.js
 import { displayCoordinates } from './ui.js';
 
+function normalizeLandmarks(landmarks) {
+  // Calculate means
+  const meanX = landmarks.reduce((acc, val) => acc + val.x, 0) / landmarks.length;
+  const meanY = landmarks.reduce((acc, val) => acc + val.y, 0) / landmarks.length;
+
+  // Calculate standard deviations
+  const stdDevX = Math.sqrt(landmarks.reduce((acc, val) => acc + Math.pow(val.x - meanX, 2), 0) / landmarks.length);
+  const stdDevY = Math.sqrt(landmarks.reduce((acc, val) => acc + Math.pow(val.y - meanY, 2), 0) / landmarks.length);
+
+  // Normalize landmarks
+  return landmarks.map(landmark => ({
+      x: (landmark.x - meanX) / stdDevX,
+      y: (landmark.y - meanY) / stdDevY
+  }));
+}
+
 function onResultsHands(results, canvasCtx3, out3) {
   document.body.classList.add('loaded');
 
@@ -12,8 +28,9 @@ function onResultsHands(results, canvasCtx3, out3) {
       const classification = results.multiHandedness[index];
       const isRightHand = classification.label === 'Right';
       const landmarks = results.multiHandLandmarks[index];
-
-      displayCoordinates(landmarks);
+      
+      const normalizedLandmarks = normalizeLandmarks(landmarks);
+      displayCoordinates(normalizedLandmarks);
 
       drawConnectors(
         canvasCtx3, landmarks, HAND_CONNECTIONS,
