@@ -12,8 +12,8 @@ function normalizeLandmarks(landmarks) {
 
   // Normalize landmarks
   return landmarks.map(landmark => ({
-      x: (landmark.x - meanX) / stdDevX,
-      y: (landmark.y - meanY) / stdDevY
+    x: (landmark.x - meanX) / stdDevX,
+    y: (landmark.y - meanY) / stdDevY
   }));
 }
 
@@ -26,9 +26,12 @@ function onResultsHands(results, canvasCtx3, out3) {
   if (results.multiHandLandmarks && results.multiHandedness) {
     for (let index = 0; index < results.multiHandLandmarks.length; index++) {
       const classification = results.multiHandedness[index];
-      const isRightHand = classification.label === 'Right';
+      let isRightHand = classification.label === 'Right';
+      if (localStorage.getItem('preferredHand') === 'Left') {
+        isRightHand = classification.label === 'Left';
+      }
       const landmarks = results.multiHandLandmarks[index];
-      
+
       const normalizedLandmarks = normalizeLandmarks(landmarks);
       displayCoordinates(normalizedLandmarks);
 

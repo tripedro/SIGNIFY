@@ -19,10 +19,9 @@
     .flex-container .output3 {
       width: 800px;
       /* Adjust to match your webcam's resolution */
-      height: 480px;
+      height: 580px;
       /* Adjust to match your webcam's resolution */
       object-fit: cover;
-      clip-path: polygon(40% 0, 100% 0, 100% 75%, 40% 75%);
     }
 
     .flex-container {
@@ -34,6 +33,34 @@
       /* Align items vertically in the center */
     }
   </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var preferredHand = localStorage.getItem('preferredHand');
+      var outputStyle = document.createElement('style');
+      document.head.appendChild(outputStyle);
+
+      if (preferredHand === 'Right') {
+        outputStyle.innerHTML = `
+                .output3 {
+                width: 800px; /* Adjust to match your webcam's resolution */
+                height: 580px; /* Adjust to match your webcam's resolution */
+                object-fit: cover;
+                clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%);
+                }`;
+      }
+      else {
+        outputStyle.innerHTML = `
+                .output3 {
+                width: 800px; /* Adjust to match your webcam's resolution */
+                height: 580px; /* Adjust to match your webcam's resolution */
+                object-fit: cover;
+                clip-path: polygon(0% 0, 70% 0, 70% 100%, 0% 100%);
+                }`;
+      }
+
+    });
+  </script>
 
   <link href="../assets/style/css/bootstrap.min.css" rel="stylesheet">
   <link rel="icon" href="../icon.ico" type="image/x-icon">
@@ -73,7 +100,7 @@
           <div class="column">
             <article class="panel is-info">
               <h1 class="panel-heading">
-                Lets Learn
+                Match the Sign
               </h1>
               <div class="panel-block">
                 <!-- Flex Container -->
@@ -87,14 +114,14 @@
                       var img = document.createElement('img');
                       img.src = ""; // Add your source URL here
                       img.id = "dynamicPicture";
-                      img.width = 255;
-                      img.height = 255;
+                      img.width = 400;//255;
+                      img.height = 280;//255;
 
                       // Create canvas element
                       var canvas = document.createElement('canvas');
                       canvas.className = "output3";
-                      canvas.setAttribute('width', '480px');
-                      canvas.setAttribute('height', '480px');
+                      canvas.setAttribute('width', '800px');
+                      canvas.setAttribute('height', '580px');
 
                       // Append elements to the container based on preferredHand
                       if (preferredHand === 'Left') {
@@ -105,9 +132,6 @@
                         container.appendChild(canvas); // Then canvas
                       }
                     });
-
-                    // <img src="" id="dynamicPicture" width="255" height="255">
-                    //     <canvas class="output3" width="480px" height="480px"></canvas>
                   </script>
 
                 </div>

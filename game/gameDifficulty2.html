@@ -37,7 +37,7 @@
         .flex-container {
             display: flex;
             /* Use flexbox to layout children */
-            justify-content: space-between;
+            justify-content: center;
             /* Space between the canvas and the image */
             align-items: center;
             /* Align items vertically in the center */
@@ -47,10 +47,10 @@
         .output3 {
             width: 800px;
             /* Adjust to match your webcam's resolution */
-            height: 480px;
+            height: 580px;
             /* Adjust to match your webcam's resolution */
             object-fit: cover;
-            clip-path: polygon(40% 0, 100% 0, 100% 100%, 40% 100%);
+            clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%);
         }
 
         #coordinates {
@@ -62,6 +62,35 @@
             margin-bottom: 20px;
         }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var preferredHand = localStorage.getItem('preferredHand');
+            var outputStyle = document.createElement('style');
+            document.head.appendChild(outputStyle);
+
+            if (preferredHand === 'Right') {
+                outputStyle.innerHTML = `
+                    .output3 {
+                    width: 800px; /* Adjust to match your webcam's resolution */
+                    height: 580px; /* Adjust to match your webcam's resolution */
+                    object-fit: cover;
+                    clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%);
+                    }`;
+            }
+            else {
+                outputStyle.innerHTML = `
+                    .output3 {
+                    width: 800px; /* Adjust to match your webcam's resolution */
+                    height: 580px; /* Adjust to match your webcam's resolution */
+                    object-fit: cover;
+                    clip-path: polygon(0% 0, 70% 0, 70% 100%, 0% 100%);
+                    }`;
+            }
+
+        });
+    </script>
+
     <link rel="icon" href="../icon.ico" type="image/x-icon">
 
     <!-- Custom styles for this template -->
@@ -99,7 +128,7 @@
                     <div class="column">
                         <article class="panel is-info">
                             <h1 class="panel-heading">
-                                Lets Play Hangman!!
+                                Guess the Word!!
                             </h1>
                             <h2 class="panel-heading">
                                 Level 2
