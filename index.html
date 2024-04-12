@@ -2,7 +2,11 @@
 <html lang="en" class="h-100">
 
 <head>
-    <!-- Bootstrap core CSS -->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
     <link href="assets/style/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -28,6 +32,29 @@
 
 <body class="d-flex h-100 text-center text-white bg-dark">
 
+    <!-- Preferred Hand Modal -->
+    <div class="modal fade" id="preferredHandModal" tabindex="-1" aria-labelledby="preferredHandModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="preferredHandModalLabel">Choose Your Preferred Hand</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Please select which hand you would like to use for signing.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="setPreferredHand('Left')">Left</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="setPreferredHand('Right')">Right</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div>
@@ -45,14 +72,37 @@
             <p class="lead">Learn how to perform finger spelling in ASL and when you feel confident, test your ability
                 through a game of hangman using your new found skills!</p>
             <p class="lead">
-                <a href="learn/learnHome.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Lets
-                    Learn</a>
                 <a href="game/gameHome.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Lets
                     Game</a>
+                <a href="learn/learnHome.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Lets
+                    Learn</a>
             </p>
         </main>
 
         <footer class="mt-auto text-white-50"></footer>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Function to ask for preferred hand
+        function setPreferredHand(hand) {
+            console.log("User chose:", hand);
+            localStorage.setItem('preferredHand', hand); // Save the chosen hand to localStorage
+        }
+
+        // Show modal on page load every time
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var myModal = new bootstrap.Modal(document.getElementById('preferredHandModal'), {
+                keyboard: false,
+                backdrop: 'static'
+            });
+            myModal.show();
+        });
+    </script>
+
+
 </body>
 
 </html>
