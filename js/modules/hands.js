@@ -1,6 +1,6 @@
 // hands.js
 import { displayCoordinates } from './ui.js';
-import { compareLandmarksToTemplateDetailed } from './matchingLogic.js';
+//import { compareLandmarksToTemplateDetailed } from './matchingLogic.js';
 
 function normalizeLandmarks(landmarks) {
   // Calculate means
@@ -18,7 +18,7 @@ function normalizeLandmarks(landmarks) {
   }));
 }
 
-function onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlphabet) {
+function onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlphabet, currentWord, currentLetterIndex) {
   document.body.classList.add('loaded');
 
   canvasCtx3.save();
@@ -29,17 +29,17 @@ function onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlpha
       const classification = results.multiHandedness[index];
       const isRightHand = classification.label === 'Right';
       const landmarks = results.multiHandLandmarks[index];
-      const landmarksCorrectness = compareLandmarksToTemplateDetailed(landmarks, aslStaticAlphabet[currentLetter]);
       
       const normalizedLandmarks = normalizeLandmarks(landmarks);
-      displayCoordinates(normalizedLandmarks);
+
+      displayCoordinates(normalizedLandmarks, currentWord, currentLetterIndex);
 
       drawConnectors(
         canvasCtx3, landmarks, HAND_CONNECTIONS,
         { color: '#949494' }
       );
       landmarks.forEach((landmark, i) => {
-        const fillColor = landmarksCorrectness[i] ? '#00FF00' : '#f44336';
+        const fillColor = '#f44336';
         drawLandmarks(canvasCtx3, [landmark], { 
           //color: isRightHand ? 'green' : 'blue',
           color: fillColor,

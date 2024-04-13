@@ -8,16 +8,14 @@ function processJsonFile(filePath) {
   const jsonData = JSON.parse(rawData);
 
   // Process the data to match the desired format
-  const formattedData = jsonData.map(templateSequence => {
-    return templateSequence.map(point => {
-      return { x: point.x, y: point.y };
-    });
+  const formattedData = jsonData.map(point => {
+    return { x: point.x, y: point.y };
   });
 
   return formattedData;
 }
 
 // pass json
-const filePath = 'templates/dynamic-right/J-1.json';
+const filePath = 'templates/dynamic-right/Z-index1.json';
 const processedData = processJsonFile(filePath);
 console.log(processedData);

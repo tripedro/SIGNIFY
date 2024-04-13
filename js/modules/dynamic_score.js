@@ -1,6 +1,4 @@
-const fs = require('fs');
-const DynamicTimeWarping = require('./dynamic-time-warping.js')
-const path = require('path');
+import DynamicTimeWarping from './dynamic-time-warping.mjs';
 
 // Distence function 
 function euclideanDistance(vector1, vector2) {
@@ -61,7 +59,6 @@ function prepareSignature(data) {
   return diffData;
 }
 
-
 // Use this function to check gestures 
 // Start by picking some key point i.e. index finger for Z 
 // Index_Finger_Tip (8)
@@ -85,42 +82,43 @@ function processGestureData(file1, file2) {
   console.log(`Gesture Score: ${score}`);
 }
 
-const rand_file1 = path.join(__dirname, '../../templates/dynamic-right/random1.json');
-const rand_file2 = path.join(__dirname, '../../templates/dynamic-right/random2.json');
+// // Tests
+// const rand_file1 = path.join(__dirname, '../../templates/dynamic-right/random1.json');
+// const rand_file2 = path.join(__dirname, '../../templates/dynamic-right/random2.json');
 
-// Z test with two Z templates
-const z_file1 = path.join(__dirname, '../../templates/dynamic-right/Z-index1.json');
-const z_file2 = path.join(__dirname, '../../templates/dynamic-right/Z-index2.json');
-console.log("Z template Match")
-processGestureData(z_file1, z_file2);
+// // Z test with two Z templates
+// const z_file1 = path.join(__dirname, '../../templates/dynamic-right/Z-index1.json');
+// const z_file2 = path.join(__dirname, '../../templates/dynamic-right/Z-index2.json');
+// console.log("Z template Match")
+// processGestureData(z_file1, z_file2);
 
-// Z tests with two random templates
-console.log("randoms for Z")
-processGestureData(z_file1, rand_file1)
-processGestureData(z_file2, rand_file1)
-processGestureData(z_file1, rand_file2)
-processGestureData(z_file2, rand_file2)
+// // Z tests with two random templates
+// console.log("randoms for Z")
+// processGestureData(z_file1, rand_file1)
+// processGestureData(z_file2, rand_file1)
+// processGestureData(z_file1, rand_file2)
+// processGestureData(z_file2, rand_file2)
 
 
-// J test with two J templates
-const j_file1 = path.join(__dirname, '../../templates/dynamic-right/J-pinky1.json');
-const j_file2 = path.join(__dirname, '../../templates/dynamic-right/J-pinky2.json');
-console.log("J Template MAtch")
-processGestureData(j_file1, j_file2);
+// // J test with two J templates
+// const j_file1 = path.join(__dirname, '../../templates/dynamic-right/J-pinky1.json');
+// const j_file2 = path.join(__dirname, '../../templates/dynamic-right/J-pinky2.json');
+// console.log("J Template MAtch")
+// processGestureData(j_file1, j_file2);
 
-// J tests with random templates
-console.log("randoms for J")
-processGestureData(j_file1, rand_file1);
-processGestureData(j_file2, rand_file1);
-processGestureData(j_file1, rand_file2);
-processGestureData(j_file2, rand_file2);
+// // J tests with random templates
+// console.log("randoms for J")
+// processGestureData(j_file1, rand_file1);
+// processGestureData(j_file2, rand_file1);
+// processGestureData(j_file1, rand_file2);
+// processGestureData(j_file2, rand_file2);
 
-// J to Z
-console.log("J to Z")
-processGestureData(z_file1, j_file1)
-processGestureData(z_file2, j_file1)
-processGestureData(z_file1, j_file2)
-processGestureData(z_file2, j_file2)
+// // J to Z
+// console.log("J to Z")
+// processGestureData(z_file1, j_file1)
+// processGestureData(z_file2, j_file1)
+// processGestureData(z_file1, j_file2)
+// processGestureData(z_file2, j_file2)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // node js\modules\dynamic_score.js
@@ -183,3 +181,5 @@ processGestureData(z_file2, j_file2)
 // // 108
 // var dist = dtw.getDistance();
 // console.log(dist)
+
+export { scoreGesture, euclideanDistance, prepareSignature };

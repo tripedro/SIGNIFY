@@ -1,9 +1,11 @@
 // app.js in the superdirectory js/
-import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording } from './modules/ui.js';
+import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording, displayCoordinates, getRecordedCoordinates } from './modules/ui.js';
 import { onResultsHands } from './modules/hands.js';
 import { initializeCamera } from './modules/camera.js';
 import aslStaticAlphabet from './modules/aslStaticAlphabet.js';
 import { compareLandmarksToTemplate } from './modules/matchingLogic.js';
+import { scoreGesture } from './modules/dynamic_score.js';
+import aslDynamicSigns from './modules/aslDynamicSigns.js';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Define the words to be spelled and the current state
@@ -29,8 +31,10 @@ async function setupAndStart() {
     // Dynamically get the current letter based on the current word and letter indices
     const currentWord = wordsToSpell[currentWordIndex];
     let currentLetter = currentWord && currentWord.length > currentLetterIndex ? currentWord[currentLetterIndex].toUpperCase() : '';
+    // Identify if the current letter is dynamic
+    const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
 
-    onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlphabet);
+    onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlphabet, currentWord, currentLetterIndex, isDynamicLetter);
   });
 
   // Initialize the camera after 'hands' is defined
@@ -65,7 +69,7 @@ function checkLetterMatch() {
 
   const currentWord = wordsToSpell[currentWordIndex];
   const currentLetter = currentWord[currentLetterIndex].toUpperCase();
-  const landmarks = latestCoordinates;
+  const landmarks = getLatestCoordinates();
   var preferredHand = localStorage.getItem('preferredHand');
 
   if (preferredHand === 'Right') {
@@ -73,17 +77,26 @@ function checkLetterMatch() {
   }
   else {
     changeImage("../pictures/" + currentLetter + "Left.png");
-
   }
+  
   // Identify if the current letter is dynamic
-  //const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
+  const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
 
-  // Call the comparison function with the dynamic flag as needed
-  const isMatch = compareLandmarksToTemplate(landmarks, aslStaticAlphabet[currentLetter]);
+  // Process dynamic gestures using Dynamic Time Warping
+  if (isDynamicLetter) {
+    // Assume we have a function getDynamicGestureTemplate that returns the correct template
+    const gestureTemplate = aslDynamicSigns[currentLetter]; // Dynamic templates for 'J' and 'Z'
+    const recordedCoordinates = getRecordedCoordinates();
+    console.log("Recorded Coordinates", recordedCoordinates)
+    if (recordedCoordinates.length >= 75){
+    const currentGesture = recordedCoordinates.slice(-100); // Use last 100 recorded coordinates
 
-  if (isMatch) {
-    // Existing logic for processing the match
-    setTimeout(() => {
+    // Use the scoreGesture function defined in dynamic_score.js
+    const gestureScore = scoreGesture(currentGesture, gestureTemplate);
+    console.log("dynamic gesture score", gestureScore)
+    // Assume a threshold for a successful gesture match
+    if (gestureScore < 75) { // threshold
+      console.log("You matched!")
       if (currentLetterIndex < currentWord.length - 1) {
         currentLetterIndex++;
       } else {
@@ -94,9 +107,25 @@ function checkLetterMatch() {
           return;
         }
       }
-      displayWordWithHighlight(currentWord, currentLetterIndex);
-    }, 1000);
+    }
   }
+  } else {
+    // Static letter comparison as before
+    const isMatch = compareLandmarksToTemplate(landmarks, aslStaticAlphabet[currentLetter]);
+    if (isMatch) {
+      if (currentLetterIndex < currentWord.length - 1) {
+        currentLetterIndex++;
+      } else {
+        currentWordIndex++;
+        currentLetterIndex = 0;
+        if (currentWordIndex >= wordsToSpell.length) {
+          console.log('Great job! All words spelled.');
+          return;
+        }
+      }
+    }
+  }
+  
   displayWordWithHighlight(currentWord, currentLetterIndex);
 }
 

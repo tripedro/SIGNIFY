@@ -23,12 +23,18 @@ function toggleRecording() {
   }
 }
 
-function recordCoordinates(handLandmarks) {
-  if (!isRecording) return;
-  
-  const frameCoordinates = handLandmarks.map(landmark => ({ x: landmark.x, y: landmark.y }));
-  recordedCoordinates.push(frameCoordinates); // Append the current frame's coordinates
+function recordCoordinates(handLandmarks, isDynamic, currentLetter) {
+  if (!isDynamic) return; // Exit if not currently recording
 
+  let index = -1;
+  if (isDynamic) {
+      index = currentLetter === 'Z' ? 8 : 20; // index for Z or J
+  }
+  handLandmarks.forEach((landmark, i) => {
+      if (!isDynamic || i === index) {
+          recordedCoordinates.push({ x: landmark.x, y: landmark.y });
+      }
+  });
   // Only record the pointer finger tip (index tip 8) (pinky tip 20)
   // if(handLandmarks.length > 8) {
   //     const tipOfPointerFinger = { x: handLandmarks[20].x, y: handLandmarks[20].y };
@@ -36,20 +42,37 @@ function recordCoordinates(handLandmarks) {
   // }
 }
 
-function displayCoordinates(handLandmarks) {
+function displayCoordinates(handLandmarks, currentWord, currentLetterIndex) {
   // comments remove printed coords
   //const coordinatesDiv = document.getElementById('coordinates');
   //coordinatesDiv.innerHTML = ''; // Clear previous coordinates
   //const coordinatesDiv = document.getElementById('coordinates');
   //coordinatesDiv.innerHTML = ''; // Clear previous coordinates
+  if (!handLandmarks || !Array.isArray(handLandmarks)) {
+    console.error("Invalid or no landmark data available", handLandmarks);
+    return;
+  }
+
+  const currentLetter = currentWord[currentLetterIndex].toUpperCase();
+
+  // Display coordinates based on the type of gesture
+  const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
+
+  const coordinatesDiv = document.getElementById('coordinates'); // Display coordinates in this HTML element
+  coordinatesDiv.innerHTML = ''; // Clear previous coordinates
 
   handLandmarks.forEach((landmark, index) => {
-    //coordinatesDiv.innerHTML += `Point ${index}: (${landmark.x.toFixed(2)}, ${landmark.y.toFixed(2)})<br>`;
-    //coordinatesDiv.innerHTML += `Point ${index}: (${landmark.x.toFixed(2)}, ${landmark.y.toFixed(2)})<br>`;
-    latestCoordinates[index] = { x: landmark.x.toFixed(2), y: landmark.y.toFixed(2) }; // Update the latest raw coordinates
+    if (!landmark) {
+      console.error('Landmark data is undefined at index', index);
+      return;  // Skip this iteration of the loop if data is undefined
+    }
+    latestCoordinates[index] = { x: landmark.x.toFixed(2), y: landmark.y.toFixed(2) };
+    if (!isDynamicLetter || (isDynamicLetter && (currentLetter === 'Z' ? index === 8 : index === 20))) {
+        //coordinatesDiv.innerHTML += `Point ${index}: (${landmark.x.toFixed(2)}, ${landmark.y.toFixed(2)})<br>`;
+    }
   });
 
-  recordCoordinates(handLandmarks); // record landmarks, 
+  recordCoordinates(handLandmarks, isDynamicLetter, currentLetter);
 }
 
 function saveCoordinates(coordinates, currentFrameOnly = false) {
@@ -89,4 +112,8 @@ function getLatestCoordinates() {
   return latestCoordinates;
 }
 
-export { displayCoordinates, saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording };
+function getRecordedCoordinates() {
+  return recordedCoordinates;
+}
+
+export { displayCoordinates, saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording, getRecordedCoordinates };
