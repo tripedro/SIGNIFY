@@ -115,6 +115,13 @@ processGestureData(j_file2, rand_file1);
 processGestureData(j_file1, rand_file2);
 processGestureData(j_file2, rand_file2);
 
+// J to Z
+console.log("J to Z")
+processGestureData(z_file1, j_file1)
+processGestureData(z_file2, j_file1)
+processGestureData(z_file1, j_file2)
+processGestureData(z_file2, j_file2)
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // node js\modules\dynamic_score.js
 // demo data 

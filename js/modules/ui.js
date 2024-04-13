@@ -56,8 +56,8 @@ function saveCoordinates(coordinates, currentFrameOnly = false) {
   let dataToSave = coordinates;
 
   if (currentFrameOnly) {
-    //dataToSave = latestCoordinates;
-    dataToSave = [{ x: latestCoordinates[8].x, y: latestCoordinates[8].y }];
+    dataToSave = latestCoordinates;
+    //dataToSave = [{ x: latestCoordinates[8].x, y: latestCoordinates[8].y }];
   }
 
   const jsonStr = JSON.stringify(dataToSave);
