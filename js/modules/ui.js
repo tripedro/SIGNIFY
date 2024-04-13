@@ -25,8 +25,15 @@ function toggleRecording() {
 
 function recordCoordinates(handLandmarks) {
   if (!isRecording) return;
+  
   const frameCoordinates = handLandmarks.map(landmark => ({ x: landmark.x, y: landmark.y }));
   recordedCoordinates.push(frameCoordinates); // Append the current frame's coordinates
+
+  // Only record the pointer finger tip (index tip 8) (pinky tip 20)
+  // if(handLandmarks.length > 8) {
+  //     const tipOfPointerFinger = { x: handLandmarks[20].x, y: handLandmarks[20].y };
+  //     recordedCoordinates.push(tipOfPointerFinger);
+  // }
 }
 
 function displayCoordinates(handLandmarks) {
@@ -49,7 +56,8 @@ function saveCoordinates(coordinates, currentFrameOnly = false) {
   let dataToSave = coordinates;
 
   if (currentFrameOnly) {
-    dataToSave = latestCoordinates;
+    //dataToSave = latestCoordinates;
+    dataToSave = [{ x: latestCoordinates[8].x, y: latestCoordinates[8].y }];
   }
 
   const jsonStr = JSON.stringify(dataToSave);

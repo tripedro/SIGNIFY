@@ -1,5 +1,4 @@
 // matchingLogic.js
-import DTWStream2D from './DTW.js';
 
 // Helper function to calculate Euclidean distance between two points
 function euclideanDistance(point1, point2) {
@@ -7,11 +6,6 @@ function euclideanDistance(point1, point2) {
   const yDiff = point1.y - point2.y;
   return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 }
-
-// function checkDynamicLetter(landmarks, template) {
-//   // DTW
-//   return true;
-// }
 
 // Function to calculate the total distance difference between all corresponding points
 function calculateTotalDistanceDifference(landmarks1, landmarks2) {
