@@ -1,6 +1,5 @@
-( function() {
-  "use strict";
-  function DynamicTimeWarping ( ts1, ts2, distanceFunction ) {
+
+  export default function DynamicTimeWarping ( ts1, ts2, distanceFunction ) {
       var ser1 = ts1;
       var ser2 = ts2;
       var distFunc = distanceFunction;
@@ -85,24 +84,24 @@
       };
 
       this.getPath = getPath;
-  }
+}
 
-  var root = typeof self === "object" && self.self === self && self ||
-      typeof global === "object" && global.global === global && global ||
-      this;
+//   var root = typeof self === "object" && self.self === self && self ||
+//       typeof global === "object" && global.global === global && global ||
+//       this;
 
-  if ( typeof exports !== "undefined" && !exports.nodeType ) {
-      if ( typeof module !== "undefined" && !module.nodeType && module.exports ) {
-          exports = module.exports = DynamicTimeWarping;
-      }
-      exports.DynamicTimeWarping = DynamicTimeWarping;
-  } else {
-      root.DynamicTimeWarping = DynamicTimeWarping;
-  }
+//   if ( typeof exports !== "undefined" && !exports.nodeType ) {
+//       if ( typeof module !== "undefined" && !module.nodeType && module.exports ) {
+//           exports = module.exports = DynamicTimeWarping;
+//       }
+//       exports.DynamicTimeWarping = DynamicTimeWarping;
+//   } else {
+//       root.DynamicTimeWarping = DynamicTimeWarping;
+//   }
 
-  if ( typeof define === "function" && define.amd ) {
-      define( "dynamic-time-warping", [], function() {
-          return DynamicTimeWarping;
-      } );
-  }
-}() );
+//   if ( typeof define === "function" && define.amd ) {
+//       define( "dynamic-time-warping", [], function() {
+//           return DynamicTimeWarping;
+//       } );
+//   }
+// }() );
