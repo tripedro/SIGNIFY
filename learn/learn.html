@@ -17,7 +17,7 @@
 
     /* Allows to have a specific section of the camera to be shown, Right now it tracks the right half. */
     .flex-container .output3 {
-      width: 800px;
+      width: 900px;
       /* Adjust to match your webcam's resolution */
       height: 580px;
       /* Adjust to match your webcam's resolution */
@@ -43,7 +43,7 @@
       if (preferredHand === 'Right') {
         outputStyle.innerHTML = `
                 .output3 {
-                width: 800px; /* Adjust to match your webcam's resolution */
+                width: 900px; /* Adjust to match your webcam's resolution */
                 height: 580px; /* Adjust to match your webcam's resolution */
                 object-fit: cover;
                 clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%);
@@ -52,7 +52,7 @@
       else {
         outputStyle.innerHTML = `
                 .output3 {
-                width: 800px; /* Adjust to match your webcam's resolution */
+                width: 900px; /* Adjust to match your webcam's resolution */
                 height: 580px; /* Adjust to match your webcam's resolution */
                 object-fit: cover;
                 clip-path: polygon(0% 0, 70% 0, 70% 100%, 0% 100%);
@@ -120,8 +120,8 @@
                       // Create canvas element
                       var canvas = document.createElement('canvas');
                       canvas.className = "output3";
-                      canvas.setAttribute('width', '800px');
-                      canvas.setAttribute('height', '580px');
+                      canvas.setAttribute('width', '900px');
+                      canvas.setAttribute('height', '480px');
 
                       // Append elements to the container based on preferredHand
                       if (preferredHand === 'Left') {

@@ -45,7 +45,7 @@
 
         /* Allows to have a specific section of the camera to be shown, Right now it tracks the right half. */
         .output3 {
-            width: 800px;
+            width: 1200px;
             /* Adjust to match your webcam's resolution */
             height: 580px;
             /* Adjust to match your webcam's resolution */
@@ -72,7 +72,7 @@
             if (preferredHand === 'Right') {
                 outputStyle.innerHTML = `
                     .output3 {
-                    width: 800px; /* Adjust to match your webcam's resolution */
+                    width: 1200px; /* Adjust to match your webcam's resolution */
                     height: 580px; /* Adjust to match your webcam's resolution */
                     object-fit: cover;
                     clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%);
@@ -81,7 +81,7 @@
             else {
                 outputStyle.innerHTML = `
                     .output3 {
-                    width: 800px; /* Adjust to match your webcam's resolution */
+                    width: 1200px; /* Adjust to match your webcam's resolution */
                     height: 580px; /* Adjust to match your webcam's resolution */
                     object-fit: cover;
                     clip-path: polygon(0% 0, 70% 0, 70% 100%, 0% 100%);
@@ -104,7 +104,8 @@
             <div>
                 <h3 class="float-md-start mb-0">Signify</h3>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                    <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+                    <a class="nav-link active" aria-current="page" href="./gameHome.html">Game</a>
                     <a class="nav-link" href="../learn/learn.html">Learn</a>
                 </nav>
             </div>
@@ -135,7 +136,7 @@
                             </h2>
                             <p id="Score"></p>
                             <div class="flex-container">
-                                <canvas class="output3" width="480px" height="480px"></canvas>
+                                <canvas class="output3" width="1200px" height="580px"></canvas>
                             </div>
                         </article>
                     </div>
