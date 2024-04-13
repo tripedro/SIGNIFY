@@ -65,6 +65,7 @@ function prepareSignature(data) {
 // Use this function to check gestures 
 // Start by picking some key point i.e. index finger for Z 
 // Index_Finger_Tip (8)
+// Pinky Tip (20)
 function scoreGesture(target_seq, stream_seq){
   var norm_target_seq = prepareSignature(target_seq)
   var norm_stream_seq = prepareSignature(stream_seq)
@@ -84,9 +85,35 @@ function processGestureData(file1, file2) {
   console.log(`Gesture Score: ${score}`);
 }
 
-const file1 = path.join(__dirname, '../../templates/dynamic-right/Z-index2.json');
-const file2 = path.join(__dirname, '../../templates/dynamic-right/Z-index1.json');
-processGestureData(file1, file2);
+const rand_file1 = path.join(__dirname, '../../templates/dynamic-right/random1.json');
+const rand_file2 = path.join(__dirname, '../../templates/dynamic-right/random2.json');
+
+// Z test with two Z templates
+const z_file1 = path.join(__dirname, '../../templates/dynamic-right/Z-index1.json');
+const z_file2 = path.join(__dirname, '../../templates/dynamic-right/Z-index2.json');
+console.log("Z template Match")
+processGestureData(z_file1, z_file2);
+
+// Z tests with two random templates
+console.log("randoms for Z")
+processGestureData(z_file1, rand_file1)
+processGestureData(z_file2, rand_file1)
+processGestureData(z_file1, rand_file2)
+processGestureData(z_file2, rand_file2)
+
+
+// J test with two J templates
+const j_file1 = path.join(__dirname, '../../templates/dynamic-right/J-pinky1.json');
+const j_file2 = path.join(__dirname, '../../templates/dynamic-right/J-pinky2.json');
+console.log("J Template MAtch")
+processGestureData(j_file1, j_file2);
+
+// J tests with random templates
+console.log("randoms for J")
+processGestureData(j_file1, rand_file1);
+processGestureData(j_file2, rand_file1);
+processGestureData(j_file1, rand_file2);
+processGestureData(j_file2, rand_file2);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // node js\modules\dynamic_score.js
