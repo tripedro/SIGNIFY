@@ -13,15 +13,32 @@ import aslDynamicSignsRight from './modules/aslDynamicSigns-right.js';
 var selectedLevel = localStorage.getItem('selectedLevel');
 console.log(selectedLevel)
 // Define word lists mapped by level
+// const wordsByLevel = {
+//   // easy
+//   '1': ['ABLE', 'BUY', 'WAVY', "SUE", "TEA", "COST", "TIN", "ICE", "MUTE", "MINUTE", 
+//   "MEN", "STONE", "SON", "NET", "MAT", "SUN", "CUSTOM", "BAT", "SIT", "BEAST", "MINCE", 
+//   "CAT", "SUMO", "COMET", "TAME", "EAT", "STEAM", "SEAT", "NUT", "NEST", "BOAT", "SET", 
+//   "TAN", "MINT", "SILENT", "INSECT", "MAN"],
+
+//   // slightly harder
+//   '2': ['BASH', 'FLEX', 'JUMP', 'QUIRK', 'TWIRL', 'GLYPH', 'KNACK', 'PLUMB', 'QUERY', 'VEXED',
+//   'WITCH', 'JINX', 'CRISP', 'FLUKE', 'SMACK'],
+
+//   // hard + dynamic
+//   '3': ['JINX', 'QUIZ', 'FJORD', 'BLAZE', 'JOKES', 'ZEBRA', 'QUAKE', 'ZESTY', 'JUMBO',
+//   'JOUST', 'ZILCH', 'JUNKY', 'VEXED', 'SMACK']
+// };
+
 const wordsByLevel = {
   // easy
-  '1': ['Able', 'Buy', 'Wavy', 'ZJ'],
-  // slightly harder
-  '2': ['Bble', 'Buy', 'Wavy', 'ZJ'],
-  // hard + dynamic
-  '3': ['Cble', 'Buy', 'Wavy', 'ZJ']
-};
+  '1': ['ABLE'],
 
+  // slightly harder
+  '2': ['BASH'],
+
+  // hard + dynamic
+  '3': ['ZJ'],
+};
 // Get words to spell based on the selected level, default to the simplest if undefined
 let wordsToSpell = wordsByLevel[selectedLevel] || ['Able', 'Buy'];
 
@@ -121,7 +138,7 @@ function checkLetterMatch() {
     const gestureScore = scoreGesture(currentGesture, gestureTemplate);
     console.log("dynamic gesture score", gestureScore)
     // Assume a threshold for a successful gesture match
-    if (gestureScore < 75) { // threshold
+    if (gestureScore < 89) { // threshold
       console.log("You matched!")
       if (currentLetterIndex < currentWord.length - 1) {
         currentLetterIndex++;
@@ -130,7 +147,15 @@ function checkLetterMatch() {
         currentLetterIndex = 0;
         if (currentWordIndex >= wordsToSpell.length) {
           console.log('Great job! All words spelled.');
-          return;
+          if (selectedLevel === '3') {  // Check if the last difficulty level is completed
+            alert("Moving to the Game!");
+            window.location.href = "../game/gameHome.html"; // Redirect to the game section
+          } else {
+            selectedLevel = (parseInt(selectedLevel) + 1).toString();  // Move to the next difficulty level
+            wordsToSpell = wordsByLevel[selectedLevel];
+            currentWordIndex = 0;  // Reset word index for new level
+            alert("Moving to next difficulty!");
+          }
         }
       }
     }
@@ -146,7 +171,15 @@ function checkLetterMatch() {
         currentLetterIndex = 0;
         if (currentWordIndex >= wordsToSpell.length) {
           console.log('Great job! All words spelled.');
-          return;
+          if (selectedLevel === '3') {  // Check if the last difficulty level is completed
+            window.location.href = "../game/gameHome.html"; // Redirect to the game section
+            alert("Moving to the Game!");
+          } else {
+            selectedLevel = (parseInt(selectedLevel) + 1).toString();  // Move to the next difficulty level
+            wordsToSpell = wordsByLevel[selectedLevel];
+            currentWordIndex = 0;  // Reset word index for new level
+            alert("Moving to next difficulty!");
+          }
         }
       }
     }
