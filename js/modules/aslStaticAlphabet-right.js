@@ -1,4 +1,4 @@
-const aslStaticAlphabet = {
+const aslStaticAlphabetRight = {
     "A": [
         {x: 1.32, y: 2.70},
         {x: -0.26, y: 2.12},
@@ -559,4 +559,4 @@ const aslStaticAlphabet = {
     ],
   };
   
-  export default aslStaticAlphabet;
+  export default aslStaticAlphabetRight;

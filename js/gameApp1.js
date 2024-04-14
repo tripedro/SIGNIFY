@@ -2,7 +2,10 @@
 import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording } from './modules/ui.js';
 import { onResultsHands } from './modules/hands.js';
 import { initializeCamera } from './modules/camera.js';
-import aslStaticAlphabet from './modules/aslStaticAlphabet.js';
+import aslStaticAlphabetLeft from './modules/aslStaticAlphabet-left.js';
+import aslStaticAlphabetRight from './modules/aslStaticAlphabet-right.js';
+import aslDynamicSignsLeft from './modules/aslDynamic-left.js';
+import aslDynamicSignsRight from './modules/aslDynamicSigns-right.js';
 import { compareLandmarksToTemplates } from './modules/matchingLogic.js';
 
 // Game State Variables
@@ -13,6 +16,17 @@ let matchedLetters = [];
 let guessedWords = 0;
 const word = wordsToSpell[Math.floor(Math.random() * wordsToSpell.length)];
 initializeWordDisplay(word);
+
+var preferredHand = localStorage.getItem('preferredHand');
+let aslStaticAlphabet;
+let aslDynamicSigns;
+if (preferredHand === 'Right') {
+  aslStaticAlphabet = aslStaticAlphabetRight;
+  aslDynamicSigns = aslDynamicSignsRight;
+} else {
+  aslStaticAlphabet = aslStaticAlphabetLeft;
+  aslDynamicSigns = aslDynamicSignsRight;
+}
 
 async function setupAndStart() {
     const video3 = document.getElementsByClassName('input_video3')[0];
@@ -25,7 +39,16 @@ async function setupAndStart() {
         locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/${file}`
     });
 
-    hands.onResults(results => onResultsHands(results, canvasCtx3, out3));
+    hands.onResults(results => {
+        // Dynamically get the current letter based on the current word and letter indices
+        const currentWord = wordsToSpell[currentWordIndex];
+        let currentLetter = currentWord && currentWord.length > currentLetterIndex ? currentWord[currentLetterIndex].toUpperCase() : '';
+        // Identify if the current letter is dynamic
+        const isDynamicLetter = currentLetter === 'Z' || currentLetter === 'J';
+    
+        onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlphabet, currentWord, currentLetterIndex, isDynamicLetter);
+      });
+
     await initializeCamera(video3, hands);
 
     new ControlPanel(controlsElement3, {

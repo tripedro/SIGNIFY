@@ -1,4 +1,4 @@
-const aslDynamicSigns = {  
+const aslDynamicSignsRight = {  
     // Z template of only index tip coord (8)
     "Z": [
       { x: -1.9491033014366115, y: -2.435319539828125 },
@@ -104,5 +104,5 @@ const aslDynamicSigns = {
     ],
 
 };
-  
-export default aslDynamicSigns;
+
+export default aslDynamicSignsRight;

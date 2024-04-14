@@ -2,10 +2,11 @@
 import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording, displayCoordinates, getRecordedCoordinates } from './modules/ui.js';
 import { onResultsHands } from './modules/hands.js';
 import { initializeCamera } from './modules/camera.js';
-import aslStaticAlphabet from './modules/aslStaticAlphabet.js';
+import aslStaticAlphabetLeft from './modules/aslStaticAlphabet-left.js';
+import aslStaticAlphabetRight from './modules/aslStaticAlphabet-right.js';
 import { compareLandmarksToTemplate } from './modules/matchingLogic.js';
 import { scoreGesture } from './modules/dynamic_score.js';
-import aslDynamicSigns from './modules/aslDynamicSigns.js';
+import aslDynamicSignsRight from './modules/aslDynamicSigns-right.js';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Define the words to be spelled and the current state
@@ -15,6 +16,17 @@ let currentLetterIndex = 0;
 const latestCoordinates = getLatestCoordinates();
 let lastDetectionTime = 0; // This will store the timestamp of the last detection
 const detectionDelay = 500; // Delay in milliseconds
+
+var preferredHand = localStorage.getItem('preferredHand');
+let aslStaticAlphabet;
+let aslDynamicSigns;
+if (preferredHand === 'Right') {
+  aslStaticAlphabet = aslStaticAlphabetRight;
+  aslDynamicSigns = aslDynamicSignsRight;
+} else {
+  aslStaticAlphabet = aslStaticAlphabetLeft;
+  aslDynamicSigns = aslDynamicSignsRight;
+}
 
 async function setupAndStart() {
   const video3 = document.getElementsByClassName('input_video3')[0];
