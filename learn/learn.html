@@ -47,7 +47,16 @@
                 height: 580px; /* Adjust to match your webcam's resolution */
                 object-fit: cover;
                 clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%);
-                }`;
+                }
+                .column {
+                margin-left: -100px;
+                }
+                #wordDisplay {
+                  margin-left: -450px; 
+                  margin-top: -125px;
+                }
+                `;
+
       }
       else {
         outputStyle.innerHTML = `
@@ -56,6 +65,13 @@
                 height: 580px; /* Adjust to match your webcam's resolution */
                 object-fit: cover;
                 clip-path: polygon(0% 0, 70% 0, 70% 100%, 0% 100%);
+                }
+                .output3 {
+                margin-right: -200px;
+                }
+                #wordDisplay {
+                  margin-right: -950px;
+                  margin-top: -125px;
                 }`;
       }
 
@@ -140,7 +156,13 @@
           </div>
 
         </div>
-        <h1 id="wordDisplay" style="margin-left: -450px; margin-top: -125px;"></h1>
+        <h1 id="wordDisplay"></h1>
+
+        <script>
+          var preferredHand = localStorage.getItem('preferredHand');
+          var outputStyle = document.createElement('style');
+        </script>
+
         <div id="coordinates" style="margin-bottom: 20px;"></div>
         <div id="coordinates"></div>
         <button id="saveBtn">Save Coordinates</button>
