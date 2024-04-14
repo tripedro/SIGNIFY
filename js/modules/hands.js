@@ -42,8 +42,8 @@ function onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlpha
         { color: '#949494' }
       );
       landmarks.forEach((landmark, i) => {
-        const fillColor = '#f44336';
-        drawLandmarks(canvasCtx3, [landmark], { 
+        const fillColor = '#00FF00';
+        drawLandmarks(canvasCtx3, [landmark], {
           //color: isRightHand ? 'green' : 'blue',
           color: fillColor,
           fillColor: fillColor,
