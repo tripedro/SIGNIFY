@@ -9,8 +9,22 @@ import { scoreGesture } from './modules/dynamic_score.js';
 import aslDynamicSignsRight from './modules/aslDynamicSigns-right.js';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Define the words to be spelled and the current state
-const wordsToSpell = ['Able', 'Buy', 'Wavy', 'ZJ'];
+// Words to be spelt based on game difficulty
+var selectedLevel = localStorage.getItem('selectedLevel');
+console.log(selectedLevel)
+// Define word lists mapped by level
+const wordsByLevel = {
+  // easy
+  '1': ['Able', 'Buy', 'Wavy', 'ZJ'],
+  // slightly harder
+  '2': ['Bble', 'Buy', 'Wavy', 'ZJ'],
+  // hard + dynamic
+  '3': ['Cble', 'Buy', 'Wavy', 'ZJ']
+};
+
+// Get words to spell based on the selected level, default to the simplest if undefined
+let wordsToSpell = wordsByLevel[selectedLevel] || ['Able', 'Buy'];
+
 let currentWordIndex = 0;
 let currentLetterIndex = 0;
 const latestCoordinates = getLatestCoordinates();

@@ -44,19 +44,21 @@
             <p class="lead">Learn how to finger spell using ASL with a set of predefined words that get more
                 challenging.</p>
             <p class="lead">
-                <a href="learn.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Level
-                    1</a>
-                <a href="learn.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Level
-                    2</a>
-                <a href="learn.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Level
-                    3</a>
+                <a onclick="saveLevelChoice('1')" href="learn.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Level 1</a>
+                <a onclick="saveLevelChoice('2')" href="learn.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Level 2</a>
+                <a onclick="saveLevelChoice('3')" href="learn.html" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Level 3</a>
             </p>
         </main>
 
         <footer class="mt-auto text-white-50"></footer>
     </div>
 
-
+    <script>
+        function saveLevelChoice(level) {
+            console.log("User Chose Level:", level);
+            localStorage.setItem('selectedLevel', level);
+        }
+    </script>
 
 </body>
 
