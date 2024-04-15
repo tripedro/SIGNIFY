@@ -1,4 +1,9 @@
 // matchingLogic.js
+/**
+ * Contains logic for comparing landmarks to predefined templates to identify gestures.
+ * - Functions are provided to calculate Euclidean distances and assess if landmarks match certain gesture templates.
+ * - This supports both detailed comparison and overall gesture recognition based on predefined thresholds.
+ */
 
 // Helper function to calculate Euclidean distance between two points
 function euclideanDistance(point1, point2) {

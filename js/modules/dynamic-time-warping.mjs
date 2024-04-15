@@ -1,3 +1,8 @@
+/**
+ * Implementation of the Dynamic Time Warping (DTW) algorithm to find an optimal match between two given sequences.
+ * - The module provides functions to calculate the distance and path between sequences using a provided distance function.
+ * - It is designed to be versatile for any types of data sequences (e.g., time-series data), provided a distance function is defined.
+ */
 
   export default function DynamicTimeWarping ( ts1, ts2, distanceFunction ) {
       var ser1 = ts1;

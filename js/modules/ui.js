@@ -1,4 +1,10 @@
 // ui.js
+/**
+ * Manages the user interface interactions and updates within the application.
+ * - Provides functions to toggle recording, save coordinates, display words with highlights, and update UI components based on application states.
+ * - It helps in dynamically updating the UI based on the real-time analysis and recognition of gestures.
+ */
+
 const spinner = document.querySelector('.loading');
 spinner.ontransitionend = () => {
   spinner.style.display = 'none';

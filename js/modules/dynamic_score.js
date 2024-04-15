@@ -1,3 +1,9 @@
+/**
+ * This module defines functions to score gestures using the Dynamic Time Warping algorithm.
+ * - It includes utilities to normalize gesture data and calculate distances between gestures.
+ * - The main function, scoreGesture, computes a similarity score between two gesture sequences to support gesture recognition.
+ */
+
 import DynamicTimeWarping from './dynamic-time-warping.mjs';
 
 // Distence function 

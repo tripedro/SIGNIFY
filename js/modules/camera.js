@@ -1,4 +1,11 @@
 // camera.js
+/**
+ * This module provides the functionality to initialize the camera and start the video feed.
+ * It utilizes the Camera class to set up video parameters and handle frame updates.
+ * - The initializeCamera function sets up the camera with specific configurations like resolution.
+ * - It returns a promise that resolves when the camera successfully starts, using the provided video element.
+ */
+
 import { onResultsHands } from './hands.js';
 
 function initializeCamera(videoElement, hands) {

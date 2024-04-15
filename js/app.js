@@ -1,4 +1,13 @@
 // app.js in the superdirectory js/
+/**
+ * This module orchestrates the interactions between different components of the application.
+ * It initializes the application logic, handling the setup for camera, hand detection, and gesture recognition systems.
+ * Key functionalities include:
+ * - Managing the application state based on the game's difficulty levels.
+ * - Orchestrating the flow between different gestures and ensuring that appropriate feedback is provided to the user.
+ * - Utilizing imported modules to handle specific tasks like gesture recognition, camera initialization, and UI updates.
+ */
+
 import { saveCoordinates, displayWordWithHighlight, getLatestCoordinates, toggleRecording, displayCoordinates, getRecordedCoordinates } from './modules/ui.js';
 import { onResultsHands } from './modules/hands.js';
 import { initializeCamera } from './modules/camera.js';
@@ -11,43 +20,35 @@ import aslDynamicSignsRight from './modules/aslDynamicSigns-right.js';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Words to be spelt based on game difficulty
 var selectedLevel = localStorage.getItem('selectedLevel');
-console.log(selectedLevel)
+
 // Define word lists mapped by level
-// const wordsByLevel = {
-//   // easy
-//   '1': ['ABLE', 'BUY', 'WAVY', "SUE", "TEA", "COST", "TIN", "ICE", "MUTE", "MINUTE", 
-//   "MEN", "STONE", "SON", "NET", "MAT", "SUN", "CUSTOM", "BAT", "SIT", "BEAST", "MINCE", 
-//   "CAT", "SUMO", "COMET", "TAME", "EAT", "STEAM", "SEAT", "NUT", "NEST", "BOAT", "SET", 
-//   "TAN", "MINT", "SILENT", "INSECT", "MAN"],
-
-//   // slightly harder
-//   '2': ['BASH', 'FLEX', 'JUMP', 'QUIRK', 'TWIRL', 'GLYPH', 'KNACK', 'PLUMB', 'QUERY', 'VEXED',
-//   'WITCH', 'JINX', 'CRISP', 'FLUKE', 'SMACK'],
-
-//   // hard + dynamic
-//   '3': ['JINX', 'QUIZ', 'FJORD', 'BLAZE', 'JOKES', 'ZEBRA', 'QUAKE', 'ZESTY', 'JUMBO',
-//   'JOUST', 'ZILCH', 'JUNKY', 'VEXED', 'SMACK']
-// };
-
 const wordsByLevel = {
   // easy
-  '1': ['ABLE'],
+  '1': ['ABLE', 'BUY', 'WAVY', "SUE", "TEA", "COST", "TIN", "ICE", "MUTE", "MINUTE", 
+  "MEN", "STONE", "SON", "NET", "MAT", "SUN", "CUSTOM", "BAT", "SIT", "BEAST", "MINCE", 
+  "CAT", "SUMO", "COMET", "TAME", "EAT", "STEAM", "SEAT", "NUT", "NEST", "BOAT", "SET", 
+  "TAN", "MINT", "SILENT", "INSECT", "MAN"],
 
   // slightly harder
-  '2': ['BASH'],
+  '2': ['BASH', 'FLEX', 'JUMP', 'QUIRK', 'TWIRL', 'GLYPH', 'KNACK', 'PLUMB', 'QUERY', 'VEXED',
+  'WITCH', 'JINX', 'CRISP', 'FLUKE', 'SMACK'],
 
   // hard + dynamic
-  '3': ['ZJ'],
+  '3': ['JINX', 'QUIZ', 'FJORD', 'BLAZE', 'JOKES', 'ZEBRA', 'QUAKE', 'ZESTY', 'JUMBO',
+  'JOUST', 'ZILCH', 'JUNKY', 'VEXED', 'SMACK']
 };
+
 // Get words to spell based on the selected level, default to the simplest if undefined
 let wordsToSpell = wordsByLevel[selectedLevel] || ['Able', 'Buy'];
 
+// Setup initial application state and retrieve configuration from local storage
 let currentWordIndex = 0;
 let currentLetterIndex = 0;
 const latestCoordinates = getLatestCoordinates();
 let lastDetectionTime = 0; // This will store the timestamp of the last detection
 const detectionDelay = 500; // Delay in milliseconds
 
+// Select ASL alphabet based on the preferred hand
 var preferredHand = localStorage.getItem('preferredHand');
 let aslStaticAlphabet;
 let aslDynamicSigns;
@@ -59,6 +60,7 @@ if (preferredHand === 'Right') {
   aslDynamicSigns = aslDynamicSignsRight;
 }
 
+// Main function to setup and start the application logic
 async function setupAndStart() {
   const video3 = document.getElementsByClassName('input_video3')[0];
   const out3 = document.getElementsByClassName('output3')[0];
@@ -104,6 +106,7 @@ async function setupAndStart() {
   setInterval(checkLetterMatch, 1500); // Check every second
 }
 
+// Function to compare the current gesture against the expected template
 function checkLetterMatch() {
   const currentTime = Date.now();
   if (currentTime < lastDetectionTime + detectionDelay) {
