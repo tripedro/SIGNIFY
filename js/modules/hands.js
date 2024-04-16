@@ -1,4 +1,10 @@
 // hands.js
+/**
+ * Handles the processing of hand landmarks received from the hand tracking module.
+ * - Provides functions to normalize and utilize landmarks for detecting hand positions and movements.
+ * - Supports rendering of these positions on a given canvas context, aiding in visual feedback for gesture recognition.
+ */
+
 import { displayCoordinates } from './ui.js';
 //import { compareLandmarksToTemplateDetailed } from './matchingLogic.js';
 
@@ -37,19 +43,15 @@ function onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlpha
 
       displayCoordinates(normalizedLandmarks, currentWord, currentLetterIndex);
 
-      drawConnectors(
-        canvasCtx3, landmarks, HAND_CONNECTIONS,
-        { color: '#949494' }
-      );
-      landmarks.forEach((landmark, i) => {
-        const fillColor = '#00FF00';
-        drawLandmarks(canvasCtx3, [landmark], {
-          //color: isRightHand ? 'green' : 'blue',
-          color: fillColor,
-          fillColor: fillColor,
-          radius: 2
-        });
+      const lineColor = matchFound ? 'green' : '#949494';  // Default color or green if match
+      const landmarkColor = matchFound ? 'green' : '#949494';  // Default color or green if match
+
+      drawConnectors(canvasCtx3, landmarks, HAND_CONNECTIONS, { color: lineColor });
+
+      landmarks.forEach(landmark => {
+        drawLandmarks(canvasCtx3, [landmark], { color: landmarkColor, fillColor: landmarkColor, radius: 2 });
       });
+
     }
   }
   canvasCtx3.restore();

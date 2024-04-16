@@ -24,10 +24,16 @@ var selectedLevel = localStorage.getItem('selectedLevel');
 // Define word lists mapped by level
 const wordsByLevel = {
   // easy
-  '1': ['ABLE', 'BUY', 'WAVY', "SUE", "TEA", "COST", "TIN", "ICE", "MUTE", "MINUTE", 
-  "MEN", "STONE", "SON", "NET", "MAT", "SUN", "CUSTOM", "BAT", "SIT", "BEAST", "MINCE", 
-  "CAT", "SUMO", "COMET", "TAME", "EAT", "STEAM", "SEAT", "NUT", "NEST", "BOAT", "SET", 
-  "TAN", "MINT", "SILENT", "INSECT", "MAN"],
+  // '1': ['ABLE', 'BUY', 'WAVY', "SUE", "TEA", "COST", "TIN", "ICE", "MUTE", "MINUTE", 
+  // "MEN", "STONE", "SON", "NET", "MAT", "SUN", "CUSTOM", "BAT", "SIT", "BEAST", "MINCE", 
+  // "CAT", "SUMO", "COMET", "TAME", "EAT", "STEAM", "SEAT", "NUT", "NEST", "BOAT", "SET", 
+  // "TAN", "MINT", "SILENT", "INSECT", "MAN"],
+    // '1': [
+    //   "ABDC", "EFGH", "IKLM", "NOPQ", "RSTU", "VWXY", "JZ"
+    // ],
+    '1': [
+      "ABDC", "EFGH", "ILM", "NOPQ", "RSTU", "VWXY", "JZ" // - k
+    ],
 
   // slightly harder
   '2': ['BASH', 'FLEX', 'JUMP', 'QUIRK', 'TWIRL', 'GLYPH', 'KNACK', 'PLUMB', 'QUERY', 'VEXED',
@@ -211,3 +217,23 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   document.getElementById('toggleRecordingBtn').addEventListener('click', toggleRecording);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupAndStart().catch(console.error);
+  const skipBtn = document.getElementById('skipBtn');
+  if (skipBtn) {
+    skipBtn.addEventListener('click', skipLetter);
+  }
+});
+
+function skipLetter() {
+  console.log("Skipletter function triggered")
+  const currentWord = wordsToSpell[currentWordIndex];
+  if (currentLetterIndex < currentWord.length - 1) {
+      currentLetterIndex++;
+  } else {
+      currentWordIndex = (currentWordIndex + 1) % wordsToSpell.length;
+      currentLetterIndex = 0;
+  }
+  displayWordWithHighlight(currentWord, currentLetterIndex);
+}
