@@ -62,6 +62,7 @@ if (preferredHand === 'Right') {
 
 // Main function to setup and start the application logic
 async function setupAndStart() {
+  // Initialize hand tracking with configuration URL
   const video3 = document.getElementsByClassName('input_video3')[0];
   const out3 = document.getElementsByClassName('output3')[0];
   const controlsElement3 = document.getElementsByClassName('control3')[0];
@@ -72,6 +73,7 @@ async function setupAndStart() {
     locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/${file}`
   });
 
+  // Setup camera and hand result processing
   hands.onResults(results => {
     // Dynamically get the current letter based on the current word and letter indices
     const currentWord = wordsToSpell[currentWordIndex];
@@ -82,7 +84,6 @@ async function setupAndStart() {
     onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlphabet, currentWord, currentLetterIndex, isDynamicLetter);
   });
 
-  // Initialize the camera after 'hands' is defined
   await initializeCamera(video3, hands);
 
   // Setup the control panel
@@ -102,7 +103,7 @@ async function setupAndStart() {
     hands.setOptions(options);
   });
 
-  // Start checking for letter matches
+  // Periodically check if the current gesture matches the expected letter
   setInterval(checkLetterMatch, 1500); // Check every second
 }
 
