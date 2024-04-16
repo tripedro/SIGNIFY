@@ -49,3 +49,27 @@ Here’s how to get started with SIGNIFY once the application is running:
 #### Game Mode
 - **Word Guessing Game:** After learning, test your skills with a word guessing game. This mode challenges you to use the letters you've learned to spell out words correctly. Currently, the game focuses on recognition of correct answers without penalization for wrong guesses.
 
+### Repository Structure
+Below is an outline and description of the main directories and files within the SIGNIFY project, designed to help you navigate and understand the setup:
+
+- `/js` - Contains all JavaScript files necessary for the application logic and UI interaction.
+  - `app.js` - Orchestrates the learning application logic, handling UI interactions and module coordination.
+  - `gameApp1.js` - Manages the game aspect of the application, handling UI interactions and module coordination.
+  - `/modules` - Modular JavaScript files for specific functionality:
+    - `camera.js` - Manages webcam integration and video feed manipulation.
+    - `dynamic_score.js` - Includes functions for scoring gestures using Dynamic Time Warping (DTW).
+    - `ui.js` - Functions to manage user interface elements like displaying coordinates and managing recordings.
+    - `hands.js` - Processes hand detection results and manages the rendering of hand landmarks on the UI.
+    - `matchingLogic.js` - Contains functions to compare detected hand landmarks against known ASL sign templates.
+    - `dynamic-time-warping.mjs` - Implements the DTW algorithm for gesture comparison.
+- `/learn` - HTML files for the Learning section of the application, providing the user interface for the ASL learning module.
+- `/game` - HTML files for the Game section of the application, where users can test their ASL knowledge in a fun and interactive way.
+- `/pictures` - This directory contains visual aids for ASL learning:
+  - Images showing left and right hand signs which are used as references in the learning module.
+- `/templates` - JSON formatted templates for each ASL alphabet letter, accommodating both left and right-hand orientations.
+- `/notebooks` - Jupyter notebooks used for developing and testing algorithms:
+  - Includes notebooks for Dynamic Time Warping evaluation and coordinate analysis which are critical for enhancing gesture recognition accuracy.
+- `/helper-scripts` - Scripts that assist in processing and setting up templates for the application:
+  - These scripts are used for generating and refining gesture templates and are essential during the development phase of the project.
+
+Feel free to explore these directories to better understand how SIGNIFY works.
