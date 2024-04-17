@@ -43,8 +43,11 @@ function onResultsHands(results, canvasCtx3, out3, currentLetter, aslStaticAlpha
 
       displayCoordinates(normalizedLandmarks, currentWord, currentLetterIndex);
 
-      const lineColor = matchFound ? 'green' : '#949494';  // Default color or green if match
-      const landmarkColor = matchFound ? 'green' : '#949494';  // Default color or green if match
+      // const lineColor = matchFound ? 'green' : '#949494';  // Default color or green if match
+      // const landmarkColor = matchFound ? 'green' : '#949494';  // Default color or green if match
+
+      const lineColor = '#949494'
+      const landmarkColor = 'green'
 
       drawConnectors(canvasCtx3, landmarks, HAND_CONNECTIONS, { color: lineColor });
 

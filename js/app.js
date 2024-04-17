@@ -52,7 +52,7 @@ let currentWordIndex = 0;
 let currentLetterIndex = 0;
 const latestCoordinates = getLatestCoordinates();
 let lastDetectionTime = 0; // This will store the timestamp of the last detection
-const detectionDelay = 500; // Delay in milliseconds
+const detectionDelay = 500; // Delay in millisecondsclear
 
 // Select ASL alphabet based on the preferred hand
 var preferredHand = localStorage.getItem('preferredHand');
@@ -148,7 +148,7 @@ function checkLetterMatch() {
     const gestureScore = scoreGesture(currentGesture, gestureTemplate);
     console.log("dynamic gesture score", gestureScore)
     // Assume a threshold for a successful gesture match
-    if (gestureScore < 89) { // threshold
+    if (gestureScore < 95) { // threshold
       console.log("You matched!")
       if (currentLetterIndex < currentWord.length - 1) {
         currentLetterIndex++;
