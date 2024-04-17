@@ -23,7 +23,7 @@ function processJsonFile(filePath) {
 }
 console.log(`Current directory: ${process.cwd()}`);
 // pass json
-const filePath = 'templates/static-left/y.json';
+const filePath = 'templates/static-right/q.json';
 const processedData = processJsonFile(filePath);
 console.log(processedData);
 
