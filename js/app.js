@@ -30,8 +30,8 @@ const wordsByLevel = {
   "TAN", "MINT", "SILENT", "INSECT", "MAN"],
 
   // slightly harder
-  '2': ['BASH', 'FLEX', 'JUMP', 'QUIRK', 'TWIRL', 'GLYPH', 'KNACK', 'PLUMB', 'QUERY', 'VEXED',
-  'WITCH', 'JINX', 'CRISP', 'FLUKE', 'SMACK'],
+  '2': ['BASH', 'FLEX', 'BERT', 'QUIRK', 'TWIRL', 'GLYPH', 'KNACK', 'PLUMB', 'QUERY', 'VEXED',
+  'WITCH', 'RAKE', 'CRISP', 'FLUKE', 'SMACK'],
 
   // hard + dynamic
   '3': ['JINX', 'QUIZ', 'FJORD', 'BLAZE', 'JOKES', 'ZEBRA', 'QUAKE', 'ZESTY', 'JUMBO',
